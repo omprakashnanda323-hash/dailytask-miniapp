@@ -27,7 +27,11 @@ document.getElementById("youtubeBtn").addEventListener("click", () => {
 });
 
 document.getElementById("refBtn").addEventListener("click", () => {
-    alert("Referral System Coming Soon");
+    const referralLink = "https://omprakashnanda323-hash.github.io/dailytask-miniapp/?ref=12345";
+
+    navigator.clipboard.writeText(referralLink);
+
+    alert("Referral Link Copied:\n" + referralLink);
 });
 
 document.getElementById("withdrawBtn").addEventListener("click", () => {
