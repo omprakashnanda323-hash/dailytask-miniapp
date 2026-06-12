@@ -9,6 +9,12 @@ const firebaseConfig = {
 };
 
 firebase.initializeApp(firebaseConfig);
+let userId = localStorage.getItem("userId");
+
+if (!userId) {
+    userId = Date.now().toString();
+    localStorage.setItem("userId", userId);
+}
 let referralCount = 0;
 
 firebase.database().ref("referrals/count").on("value", (snapshot) => {
@@ -35,11 +41,12 @@ document.getElementById("youtubeBtn").addEventListener("click", () => {
 });
 
 document.getElementById("refBtn").addEventListener("click", () => {
-    const referralLink = "https://omprakashnanda323-hash.github.io/dailytask-miniapp/?ref=12345";
+    const referralLink =
+        "https://omprakashnanda323-hash.github.io/dailytask-miniapp/?ref=" + userId;
 
     navigator.clipboard.writeText(referralLink);
 
-    alert("Referral Link Copied:\n" + referralLink);
+    alert("Referral Link Copied!\n" + referralLink);
 });
 
 document.getElementById("withdrawBtn").addEventListener("click", () => {
