@@ -1,3 +1,4 @@
+alert("app.js loaded");
 const firebaseConfig = {
 apiKey: "AIzaSyBUxAiC17gKvnyVAdZEuQ0IEi3ctzckd_Y",
 authDomain: "dailytask-earning.firebaseapp.com",
