@@ -1,9 +1,9 @@
 document.getElementById("joinBtn").addEventListener("click", () => {
-    alert("Telegram Channel Link Yahan Add Karna Hai");
+    window.open("https://t.me/+sVoxUBy6_8A3MDVl", "_blank");
 });
 
 document.getElementById("youtubeBtn").addEventListener("click", () => {
-    alert("YouTube Link Yahan Add Karna Hai");
+    window.open("https://www.youtube.com/@omprakashnanda4140", "_blank");
 });
 
 document.getElementById("refBtn").addEventListener("click", () => {
