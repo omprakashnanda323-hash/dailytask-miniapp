@@ -28,8 +28,6 @@ document.getElementById("joinBtn").addEventListener("click", () => {
     firebase.database().ref("clicks/telegram").push({
         time: Date.now()
     });
-
-    firebase.database().ref("referrals/count").set(referralCount + 1);
 });
 
 document.getElementById("youtubeBtn").addEventListener("click", () => {
