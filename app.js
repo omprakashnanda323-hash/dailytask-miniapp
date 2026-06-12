@@ -17,8 +17,24 @@ if (!userId) {
 }
 let referralCount = 0;
 
-firebase.database().ref("referrals/count").on("value", (snapshot) => {
+const params = new URLSearchParams(window.location.search);
+const referrerId = params.get("ref");
+
+if (referrerId && referrerId !== userId) {
+
+    const alreadyCounted = localStorage.getItem("refCounted");
+
+    if (!alreadyCounted) {
+
+        firebase.database().ref("users/" + referrerId + "/count").transaction((current) => {
+            return (current || 0) + 1;
+        });
+
+        localStorage.setItem("refCounted", "yes");
+    }
+firebase.database().ref("users/" + userId + "/count").on("value", (snapshot) => {
     referralCount = snapshot.val() || 0;
+
     document.getElementById("refCount").innerText =
         "Referrals: " + referralCount;
 });
