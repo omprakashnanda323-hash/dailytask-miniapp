@@ -73,15 +73,14 @@ firebase.database().ref("clicks/youtube").push({
 });
 
 document.getElementById("refBtn").addEventListener("click", () => {
-const referralLink =
-"https://omprakashnanda323-hash.github.io/dailytask-miniapp/?ref=" + userId;
+    alert("Referral Button Clicked");
 
-```
-navigator.clipboard.writeText(referralLink);
+    const referralLink =
+    "https://omprakashnanda323-hash.github.io/dailytask-miniapp/?ref=" + userId;
 
-alert("Referral Link Copied!\n" + referralLink);
-```
+    navigator.clipboard.writeText(referralLink);
 
+    alert("Referral Link:\n" + referralLink);
 });
 
 document.getElementById("withdrawBtn").addEventListener("click", () => {
