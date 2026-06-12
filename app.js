@@ -9,13 +9,21 @@ const firebaseConfig = {
 };
 
 firebase.initializeApp(firebaseConfig);
+let referralCount = 0;
 
+firebase.database().ref("referrals/count").on("value", (snapshot) => {
+    referralCount = snapshot.val() || 0;
+    document.getElementById("refCount").innerText =
+        "Referrals: " + referralCount;
+});
 document.getElementById("joinBtn").addEventListener("click", () => {
     window.open("https://t.me/+sVoxUBy6_8A3MDVl", "_blank");
 
     firebase.database().ref("clicks/telegram").push({
         time: Date.now()
     });
+
+    firebase.database().ref("referrals/count").set(referralCount + 1);
 });
 
 document.getElementById("youtubeBtn").addEventListener("click", () => {
