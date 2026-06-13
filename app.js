@@ -30,29 +30,25 @@ alert("ref = " + referrerId);
 
 if (referrerId && referrerId !== userId) {
 
-```
-alert("Referrer Found: " + referrerId);
-
-firebase.database()
-    .ref("users/" + referrerId + "/count")
-    .transaction((current) => {
-        return (current || 0) + 1;
-    });
-
-localStorage.setItem("refCounted", "yes");
-```
-
+    firebase.database()
+        .ref("users/" + referrerId + "/count")
+        .transaction((current) => {
+            return (current || 0) + 1;
+        })
+        .catch((err) => {
+            console.log(err);
+        });
 }
 
 
 firebase.database().ref("users/" + userId + "/count").on("value", (snapshot) => {
-referralCount = snapshot.val() || 0;
+    referralCount = snapshot.val() || 0;
 
-```
-document.getElementById("refCount").innerText =
-    "Referrals: " + referralCount;
-```
+    const refElement = document.getElementById("refCount");
 
+    if (refElement) {
+        refElement.innerText = "Referrals: " + referralCount;
+    }
 });
 
 document.getElementById("joinBtn").addEventListener("click", () => {
