@@ -9,17 +9,27 @@
 
 <h1>Daily Task Earning</h1>
 
-<button id="joinBtn">📢 Join Telegram Channel</button>
+<h2 id="balance">Balance: ₹0</h2>
 
-<button id="youtubeBtn">▶️ Subscribe YouTube</button>
+<button id="joinBtn">📢 Join Telegram Channel (+₹1)</button>
+
+<button id="youtubeBtn">▶️ Subscribe YouTube (+₹1)</button>
 
 <button id="refBtn">👥 Referral</button>
+
 <p id="refCount">Referrals: 0</p>
+
+<h3>Withdraw</h3>
+
+<input type="text" id="upiId" placeholder="Enter UPI ID">
+
 <button id="withdrawBtn">💰 Withdraw</button>
 
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
-<script src="app.js"></script>
+<h3>Leaderboard</h3>
+
+<div id="leaderboard">
+Loading...
+</div>
 
 </body>
 </html>
