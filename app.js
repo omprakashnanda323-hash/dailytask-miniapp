@@ -1,4 +1,3 @@
-
 const firebaseConfig = {
 apiKey: "AIzaSyBUxAiC17gKvnyVAdZEuQ0IEi3ctzckd_Y",
 authDomain: "dailytask-earning.firebaseapp.com",
@@ -11,7 +10,6 @@ appId: "1:1054491992628:web:e5f4820e9a77ef38252061"
 
 firebase.initializeApp(firebaseConfig);
 
-
 let userId = localStorage.getItem("userId");
 
 if (!userId) {
@@ -20,67 +18,178 @@ localStorage.setItem("userId", userId);
 }
 
 let referralCount = 0;
+let balance = 0;
 
 const params = new URLSearchParams(window.location.search);
 const referrerId = params.get("ref");
 
+// Referral protection
+if (
+referrerId &&
+referrerId !== userId &&
+!localStorage.getItem("ref_used")
+) {
+firebase.database()
+.ref("users/" + referrerId + "/count")
+.transaction((current) => {
+return (current || 0) + 1;
+});
 
-if (referrerId && referrerId !== userId) {
+```
+localStorage.setItem("ref_used", "yes");
+```
 
-    firebase.database()
-        .ref("users/" + referrerId + "/count")
-        .transaction((current) => {
-            return (current || 0) + 1;
-        })
-        .catch((err) => {
-            console.log(err);
-        });
 }
 
+// Load user data
+firebase.database().ref("users/" + userId).on("value", (snapshot) => {
 
-firebase.database().ref("users/" + userId + "/count").on("value", (snapshot) => {
-    referralCount = snapshot.val() || 0;
+```
+const data = snapshot.val() || {};
 
-    const refElement = document.getElementById("refCount");
+referralCount = data.count || 0;
 
-    if (refElement) {
-        refElement.innerText = "Referrals: " + referralCount;
-    }
+let taskBalance = data.taskBalance || 0;
+
+balance = (referralCount * 5) + taskBalance;
+
+document.getElementById("refCount").innerText =
+    "Referrals: " + referralCount;
+
+document.getElementById("balance").innerText =
+    "Balance: ₹" + balance;
+```
+
 });
 
+// Telegram Task
 document.getElementById("joinBtn").addEventListener("click", () => {
+
+```
 window.open("https://t.me/+sVoxUBy6_8A3MDVl", "_blank");
 
-```
-firebase.database().ref("clicks/telegram").push({
-    time: Date.now()
-});
+if (!localStorage.getItem("telegram_done")) {
+
+    firebase.database()
+        .ref("users/" + userId + "/taskBalance")
+        .transaction((current) => {
+            return (current || 0) + 1;
+        });
+
+    localStorage.setItem("telegram_done", "yes");
+
+    alert("₹1 Added");
+}
 ```
 
 });
 
+// YouTube Task
 document.getElementById("youtubeBtn").addEventListener("click", () => {
-window.open("https://www.youtube.com/@omprakashnanda4140", "_blank");
 
 ```
-firebase.database().ref("clicks/youtube").push({
+window.open(
+    "https://www.youtube.com/@omprakashnanda4140",
+    "_blank"
+);
+
+if (!localStorage.getItem("youtube_done")) {
+
+    firebase.database()
+        .ref("users/" + userId + "/taskBalance")
+        .transaction((current) => {
+            return (current || 0) + 1;
+        });
+
+    localStorage.setItem("youtube_done", "yes");
+
+    alert("₹1 Added");
+}
+```
+
+});
+
+// Referral Link
+document.getElementById("refBtn").addEventListener("click", () => {
+
+```
+const referralLink =
+    "https://omprakashnanda323-hash.github.io/dailytask-miniapp/?ref=" +
+    userId;
+
+navigator.clipboard.writeText(referralLink);
+
+alert("Referral Link Copied");
+```
+
+});
+
+// Withdraw
+document.getElementById("withdrawBtn").addEventListener("click", () => {
+
+```
+const upiId = document.getElementById("upiId").value;
+
+if (!upiId) {
+    alert("Enter UPI ID");
+    return;
+}
+
+if (referralCount < 10) {
+    alert("Minimum 10 referrals required");
+    return;
+}
+
+if (balance < 50) {
+    alert("Minimum ₹50 required");
+    return;
+}
+
+firebase.database().ref("withdrawRequests").push({
+    userId: userId,
+    upiId: upiId,
+    balance: balance,
+    referrals: referralCount,
     time: Date.now()
 });
+
+alert("Withdraw Request Submitted");
 ```
 
 });
 
-document.getElementById("refBtn").addEventListener("click", () => {
-    alert("Referral Button Clicked");
+// Leaderboard
+firebase.database().ref("users").on("value", (snapshot) => {
 
-    const referralLink =
-    "https://omprakashnanda323-hash.github.io/dailytask-miniapp/?ref=" + userId;
+```
+const users = snapshot.val() || {};
 
-    navigator.clipboard.writeText(referralLink);
+let arr = [];
 
-    alert("Referral Link:\n" + referralLink);
+for (let id in users) {
+
+    arr.push({
+        id: id,
+        refs: users[id].count || 0
+    });
+}
+
+arr.sort((a, b) => b.refs - a.refs);
+
+let html = "";
+
+arr.slice(0, 10).forEach((user, index) => {
+
+    html +=
+        (index + 1) +
+        ". " +
+        user.id.substring(0, 6) +
+        " - " +
+        user.refs +
+        " referrals<br>";
 });
 
-document.getElementById("withdrawBtn").addEventListener("click", () => {
-alert("Withdraw System Coming Soon");
+document.getElementById("leaderboard").innerHTML = html;
+```
+
 });
