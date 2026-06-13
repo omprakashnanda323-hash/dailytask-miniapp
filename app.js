@@ -1,4 +1,4 @@
-alert("app.js loaded");
+
 const firebaseConfig = {
 apiKey: "AIzaSyBUxAiC17gKvnyVAdZEuQ0IEi3ctzckd_Y",
 authDomain: "dailytask-earning.firebaseapp.com",
@@ -11,9 +11,7 @@ appId: "1:1054491992628:web:e5f4820e9a77ef38252061"
 
 firebase.initializeApp(firebaseConfig);
 
-firebase.database().ref("test").set({
-    time: Date.now()
-});
+
 let userId = localStorage.getItem("userId");
 
 if (!userId) {
@@ -26,7 +24,6 @@ let referralCount = 0;
 const params = new URLSearchParams(window.location.search);
 const referrerId = params.get("ref");
 
-alert("ref = " + referrerId);
 
 if (referrerId && referrerId !== userId) {
 
