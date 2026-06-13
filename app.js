@@ -35,16 +35,16 @@ firebase.database()
 return (current || 0) + 1;
 });
 
-```
+
 localStorage.setItem("ref_used", "yes");
-```
+
 
 }
 
 // Load user data
 firebase.database().ref("users/" + userId).on("value", (snapshot) => {
 
-```
+
 const data = snapshot.val() || {};
 
 referralCount = data.count || 0;
@@ -58,14 +58,14 @@ document.getElementById("refCount").innerText =
 
 document.getElementById("balance").innerText =
     "Balance: ₹" + balance;
-```
+
 
 });
 
 // Telegram Task
 document.getElementById("joinBtn").addEventListener("click", () => {
 
-```
+
 window.open("https://t.me/+sVoxUBy6_8A3MDVl", "_blank");
 
 if (!localStorage.getItem("telegram_done")) {
@@ -80,14 +80,14 @@ if (!localStorage.getItem("telegram_done")) {
 
     alert("₹1 Added");
 }
-```
+
 
 });
 
 // YouTube Task
 document.getElementById("youtubeBtn").addEventListener("click", () => {
 
-```
+
 window.open(
     "https://www.youtube.com/@omprakashnanda4140",
     "_blank"
@@ -105,14 +105,14 @@ if (!localStorage.getItem("youtube_done")) {
 
     alert("₹1 Added");
 }
-```
+
 
 });
 
 // Referral Link
 document.getElementById("refBtn").addEventListener("click", () => {
 
-```
+
 const referralLink =
     "https://omprakashnanda323-hash.github.io/dailytask-miniapp/?ref=" +
     userId;
@@ -120,14 +120,14 @@ const referralLink =
 navigator.clipboard.writeText(referralLink);
 
 alert("Referral Link Copied");
-```
+
 
 });
 
 // Withdraw
 document.getElementById("withdrawBtn").addEventListener("click", () => {
 
-```
+
 const upiId = document.getElementById("upiId").value;
 
 if (!upiId) {
@@ -154,14 +154,13 @@ firebase.database().ref("withdrawRequests").push({
 });
 
 alert("Withdraw Request Submitted");
-```
+
 
 });
 
 // Leaderboard
 firebase.database().ref("users").on("value", (snapshot) => {
 
-```
 const users = snapshot.val() || {};
 
 let arr = [];
@@ -190,6 +189,5 @@ arr.slice(0, 10).forEach((user, index) => {
 });
 
 document.getElementById("leaderboard").innerHTML = html;
-```
 
 });
