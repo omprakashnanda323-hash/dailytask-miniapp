@@ -26,6 +26,8 @@ let referralCount = 0;
 const params = new URLSearchParams(window.location.search);
 const referrerId = params.get("ref");
 
+alert("ref = " + referrerId);
+
 if (referrerId && referrerId !== userId) {
 
 ```
