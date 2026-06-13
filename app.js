@@ -11,6 +11,9 @@ appId: "1:1054491992628:web:e5f4820e9a77ef38252061"
 
 firebase.initializeApp(firebaseConfig);
 
+firebase.database().ref("test").set({
+    time: Date.now()
+});
 let userId = localStorage.getItem("userId");
 
 if (!userId) {
