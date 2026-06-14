@@ -203,3 +203,38 @@ if (taskSection.style.display === "none") {
 }
 
 });
+
+document.getElementById("submitApp1").addEventListener("click", () => {
+    submitTask("WG Refer", "app1Uid");
+});
+
+document.getElementById("submitApp2").addEventListener("click", () => {
+    submitTask("DailyDo", "app2Uid");
+});
+
+document.getElementById("submitApp3").addEventListener("click", () => {
+    submitTask("Service Hut", "app3Uid");
+});
+
+function submitTask(appName, inputId) {
+
+    const uid = document.getElementById(inputId).value;
+
+    if (!uid) {
+        alert("Enter UID");
+        return;
+    }
+
+    firebase.database().ref("taskRequests").push({
+        userId: userId,
+        app: appName,
+        uid: uid,
+        reward: 2,
+        status: "pending",
+        time: Date.now()
+    });
+
+    alert("Task submitted successfully");
+
+    document.getElementById(inputId).value = "";
+}
