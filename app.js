@@ -191,3 +191,15 @@ arr.slice(0, 10).forEach((user, index) => {
 document.getElementById("leaderboard").innerHTML = html;
 
 });
+
+document.getElementById("taskBtn").addEventListener("click", () => {
+
+const taskSection = document.getElementById("taskSection");
+
+if (taskSection.style.display === "none") {
+    taskSection.style.display = "block";
+} else {
+    taskSection.style.display = "none";
+}
+
+});
