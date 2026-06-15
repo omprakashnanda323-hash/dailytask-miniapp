@@ -19,6 +19,7 @@ localStorage.setItem("userId", userId);
 
 let referralCount = 0;
 let balance = 0;
+let completedTasks = 0;
 
 const params = new URLSearchParams(window.location.search);
 const referrerId = params.get("ref");
@@ -50,7 +51,9 @@ const data = snapshot.val() || {};
 referralCount = data.count || 0;
 
 let taskBalance = data.taskBalance || 0;
-
+    
+completedTasks = data.completedTasks || 0;
+    
 balance = (referralCount * 5) + taskBalance;
 
 document.getElementById("refCount").innerText =
@@ -140,8 +143,13 @@ if (referralCount < 10) {
     return;
 }
 
-if (balance < 50) {
-    alert("Minimum ₹50 required");
+if (completedTasks < 2) {
+    alert("Complete minimum 2 tasks");
+    return;
+}
+
+if (balance < 100) {
+    alert("Minimum ₹100 required");
     return;
 }
 
