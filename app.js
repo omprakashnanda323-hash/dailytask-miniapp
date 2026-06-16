@@ -237,12 +237,11 @@ function submitTask(appName, inputId) {
         userId: userId,
         app: appName,
         uid: uid,
-        reward: 2,
         status: "pending",
         time: Date.now()
     });
 
-    alert("Task submitted successfully");
+    alert("Task Submitted Successfully");
 
     document.getElementById(inputId).value = "";
 }
