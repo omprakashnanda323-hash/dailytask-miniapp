@@ -112,6 +112,13 @@ if (!localStorage.getItem("youtube_done")) {
 
 });
 
+document.getElementById("whatsappBtn").addEventListener("click", () => {
+    window.open(
+        "https://chat.whatsapp.com/KI80rsgNHwp1lTOO964Yah?s=cl&p=a&ilr=1",
+        "_blank"
+    );
+});
+
 // Referral Link
 document.getElementById("refBtn").addEventListener("click", () => {
 
