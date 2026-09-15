@@ -117,66 +117,194 @@
     </button>
 
 
-    <!-- Task Section -->
-    <div id="taskSection" class="task-section" style="display:none;">
+    <!-- COMPLETE TASKS SECTION -->
 
-        <div class="app-task">
+<div id="taskSection" class="task-section" style="display:none;">
 
-            <h3>1️⃣ WG Refer</h3>
+    <div class="task-page-title">
+        <span>📋</span>
+        <div>
+            <h2>Complete Tasks</h2>
+            <p>Register & complete tasks to earn rewards</p>
+        </div>
+    </div>
 
-            <p>Register using the link below.</p>
+    <!-- WG REFER -->
+    <div class="earning-task-card">
 
-            <button onclick="window.open('https://wgrefer.com?c=59569635','_blank')">
-                Open App
+        <div class="app-header">
+
+            <div class="app-logo">📱</div>
+
+            <div>
+                <h3>WG Refer</h3>
+                <p>Registration Task</p>
+            </div>
+
+            <div class="task-reward">REWARD</div>
+
+        </div>
+
+        <div class="task-info-box">
+            <p>📝 Register on WG Refer using our referral link.</p>
+            <p>💡 Watch the tutorial to understand the complete process.</p>
+        </div>
+
+        <div class="task-buttons">
+
+            <button
+                class="app-link-btn"
+                onclick="window.open('https://wgrefer.com?c=59569635','_blank')">
+                📱 Open Application
             </button>
 
-            <input type="text" id="app1Uid" placeholder="Enter your UID">
-
-            <button id="submitApp1">
-                Submit Task
+            <button
+                class="video-btn"
+                onclick="window.open('YOUR_WG_REFER_YOUTUBE_VIDEO_LINK','_blank')">
+                ▶️ Watch Tutorial
             </button>
 
         </div>
 
+        <input
+            type="text"
+            id="app1Uid"
+            placeholder="Enter your WG Refer UID"
+        >
 
-        <div class="app-task">
-
-            <h3>2️⃣ DailyDo</h3>
-
-            <p>Register using the link below.</p>
-
-            <button onclick="window.open('https://dailydo.in/refer?code=DDA3FLCRC','_blank')">
-                Open App
-            </button>
-
-            <input type="text" id="app2Uid" placeholder="Enter your UID">
-
-            <button id="submitApp2">
-                Submit Task
-            </button>
-
-        </div>
-
-
-        <div class="app-task">
-
-            <h3>3️⃣ Service Hut</h3>
-
-            <p>Referral Code: <strong>580702</strong></p>
-
-            <button onclick="window.open('https://servicehut.online/','_blank')">
-                Open App
-            </button>
-
-            <input type="text" id="app3Uid" placeholder="Enter your UID">
-
-            <button id="submitApp3">
-                Submit Task
-            </button>
-
-        </div>
+        <button
+            class="submit-task-btn"
+            onclick="submitTask('WG Refer','app1Uid')">
+            ✅ Submit Task
+        </button>
 
     </div>
+
+
+    <!-- DAILYDO -->
+    <div class="earning-task-card">
+
+        <div class="app-header">
+
+            <div class="app-logo dailydo-logo">📲</div>
+
+            <div>
+                <h3>DailyDo</h3>
+                <p>Registration Task</p>
+            </div>
+
+            <div class="task-reward">REWARD</div>
+
+        </div>
+
+        <div class="task-info-box">
+            <p>📝 Register on DailyDo using our referral link.</p>
+            <p>💡 Watch the tutorial before completing the task.</p>
+        </div>
+
+        <div class="task-buttons">
+
+            <button
+                class="app-link-btn"
+                onclick="window.open('https://dailydo.in/refer?code=DDA3FLCRC','_blank')">
+                📱 Open Application
+            </button>
+
+            <button
+                class="video-btn"
+                onclick="window.open('YOUR_DAILYDO_YOUTUBE_VIDEO_LINK','_blank')">
+                ▶️ Watch Tutorial
+            </button>
+
+        </div>
+
+        <input
+            type="text"
+            id="app2Uid"
+            placeholder="Enter your DailyDo UID"
+        >
+
+        <button
+            class="submit-task-btn"
+            onclick="submitTask('DailyDo','app2Uid')">
+            ✅ Submit Task
+        </button>
+
+    </div>
+
+
+    <!-- SERVICE HUT -->
+    <div class="earning-task-card">
+
+        <div class="app-header">
+
+            <div class="app-logo service-logo">🏦</div>
+
+            <div>
+                <h3>Service Hut</h3>
+                <p>Registration Task</p>
+            </div>
+
+            <div class="task-reward">REWARD</div>
+
+        </div>
+
+        <div class="task-info-box">
+
+            <p>📝 Register using referral code:</p>
+
+            <div class="referral-code">
+                580702
+            </div>
+
+            <p>💡 Watch the tutorial for the complete process.</p>
+
+        </div>
+
+        <div class="task-buttons">
+
+            <button
+                class="app-link-btn"
+                onclick="window.open('https://servicehut.online/','_blank')">
+                📱 Open Application
+            </button>
+
+            <button
+                class="video-btn"
+                onclick="window.open('YOUR_SERVICE_HUT_YOUTUBE_VIDEO_LINK','_blank')">
+                ▶️ Watch Tutorial
+            </button>
+
+        </div>
+
+        <input
+            type="text"
+            id="app3Uid"
+            placeholder="Enter your Service Hut UID"
+        >
+
+        <button
+            class="submit-task-btn"
+            onclick="submitTask('Service Hut','app3Uid')">
+            ✅ Submit Task
+        </button>
+
+    </div>
+
+
+    <div class="task-note">
+
+        <strong>⚠️ Important</strong>
+
+        <p>
+            Complete the registration using the provided link.
+            Watch the tutorial if you need help. After registration,
+            enter your correct UID and submit the task.
+        </p>
+
+    </div>
+
+</div>
 
 
     <!-- Referral -->
