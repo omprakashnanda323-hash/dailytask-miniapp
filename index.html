@@ -1,72 +1,311 @@
 <!DOCTYPE html>
-<html>
+
+<html lang="en">
 <head>
-    <title>Daily Task Earning</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+
+```
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Daily Task Earning</title>
+
+<link rel="stylesheet" href="style.css">
+```
+
 </head>
+
 <body>
 
-<h1>Daily Task Earning</h1>
+<div class="app-container">
 
-<h2 id="balance">Balance: ₹0</h2>
+```
+<!-- Header -->
+<div class="header">
+    <div class="logo">
+        <div class="logo-icon">₹</div>
+        <div>
+            <h1>Daily Task</h1>
+            <p>Complete Tasks & Earn Rewards</p>
+        </div>
+    </div>
+</div>
 
-<button id="joinBtn">📢 Join Telegram Channel (+₹1)</button>
 
-<button id="youtubeBtn">▶️ Subscribe YouTube (+₹1)</button>
+<!-- Balance Card -->
+<div class="balance-card">
 
-<button id="whatsappBtn">💬 WhatsApp Support Group</button>
-    
-<button id="taskBtn">📋 Tasks</button>
+    <p class="balance-title">YOUR AVAILABLE BALANCE</p>
 
-<div id="taskSection" style="display:none;">
+    <h2 id="balance">₹0</h2>
 
-<h3>1️⃣ WG Refer (+₹2)</h3>
-<button onclick="window.open('https://wgrefer.com?c=59569635','_blank')">
-Open App 1
-</button>
-<input type="text" id="app1Uid" placeholder="Enter UID">
+    <div class="balance-info">
 
-<button id="submitApp1">Submit Task</button>
+        <div class="info-box">
+            <span>👥</span>
+            <p id="refCount">Referrals: 0</p>
+        </div>
 
-<h3>2️⃣ DailyDo (+₹2)</h3>
-<button onclick="window.open('https://dailydo.in/refer?code=DDA3FLCRC','_blank')">
-Open App 2
-</button>
-<input type="text" id="app2Uid" placeholder="Enter UID">
+        <div class="info-box">
+            <span>💰</span>
+            <p>₹5 Per Referral</p>
+        </div>
 
-<button id="submitApp1">Submit Task</button>
-
-<h3>3️⃣ Service Hut (+₹2)</h3>
-<button onclick="window.open('https://servicehut.online/','_blank')">
-Open App 3
-</button>
-<p>Referral Code: <b>580702</b></p>
-<input type="text" id="app3Uid" placeholder="Enter UID">
-
-<button id="submitApp1">Submit Task</button>
+    </div>
 
 </div>
-    
-<button id="refBtn">👥 Referral</button>
 
-<p id="refCount">Referrals: 0</p>
 
-<h3>Withdraw</h3>
+<!-- Quick Tasks -->
+<div class="section">
 
-<input type="text" id="upiId" placeholder="Enter UPI ID">
+    <h2 class="section-title">⚡ Quick Tasks</h2>
 
-<button id="withdrawBtn">💰 Withdraw</button>
+    <div class="task-card">
 
-<h3>Leaderboard</h3>
+        <div class="task-icon telegram">📢</div>
 
-<div id="leaderboard">
-Loading...
+        <div class="task-info">
+            <h3>Join Telegram</h3>
+            <p>Join our official channel</p>
+        </div>
+
+        <button id="joinBtn" class="reward-btn">
+            +₹1
+        </button>
+
+    </div>
+
+
+    <div class="task-card">
+
+        <div class="task-icon youtube">▶️</div>
+
+        <div class="task-info">
+            <h3>Subscribe YouTube</h3>
+            <p>Subscribe to our channel</p>
+        </div>
+
+        <button id="youtubeBtn" class="reward-btn">
+            +₹1
+        </button>
+
+    </div>
+
 </div>
-    
+
+
+<!-- Main Menu -->
+<div class="section">
+
+    <h2 class="section-title">🚀 Earn More</h2>
+
+
+    <!-- Tasks -->
+    <button id="taskBtn" class="menu-card">
+
+        <div class="menu-left">
+            <div class="menu-icon">📋</div>
+
+            <div>
+                <h3>Complete Tasks</h3>
+                <p>Register apps and earn rewards</p>
+            </div>
+        </div>
+
+        <span class="arrow">›</span>
+
+    </button>
+
+
+    <!-- Task Section -->
+    <div id="taskSection" class="task-section" style="display:none;">
+
+        <div class="app-task">
+
+            <h3>1️⃣ WG Refer</h3>
+
+            <p>Register using the link below.</p>
+
+            <button onclick="window.open('https://wgrefer.com?c=59569635','_blank')">
+                Open App
+            </button>
+
+            <input type="text" id="app1Uid" placeholder="Enter your UID">
+
+            <button id="submitApp1">
+                Submit Task
+            </button>
+
+        </div>
+
+
+        <div class="app-task">
+
+            <h3>2️⃣ DailyDo</h3>
+
+            <p>Register using the link below.</p>
+
+            <button onclick="window.open('https://dailydo.in/refer?code=DDA3FLCRC','_blank')">
+                Open App
+            </button>
+
+            <input type="text" id="app2Uid" placeholder="Enter your UID">
+
+            <button id="submitApp2">
+                Submit Task
+            </button>
+
+        </div>
+
+
+        <div class="app-task">
+
+            <h3>3️⃣ Service Hut</h3>
+
+            <p>Referral Code: <strong>580702</strong></p>
+
+            <button onclick="window.open('https://servicehut.online/','_blank')">
+                Open App
+            </button>
+
+            <input type="text" id="app3Uid" placeholder="Enter your UID">
+
+            <button id="submitApp3">
+                Submit Task
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- Referral -->
+    <button id="refBtn" class="menu-card">
+
+        <div class="menu-left">
+
+            <div class="menu-icon purple">👥</div>
+
+            <div>
+                <h3>Refer & Earn</h3>
+                <p>Earn ₹5 for every referral</p>
+            </div>
+
+        </div>
+
+        <span class="arrow">›</span>
+
+    </button>
+
+
+    <!-- WhatsApp -->
+    <button id="whatsappBtn" class="menu-card">
+
+        <div class="menu-left">
+
+            <div class="menu-icon green">💬</div>
+
+            <div>
+                <h3>WhatsApp Support</h3>
+                <p>Updates, information and help</p>
+            </div>
+
+        </div>
+
+        <span class="arrow">›</span>
+
+    </button>
+
+</div>
+
+
+<!-- Withdraw -->
+<div class="section">
+
+    <h2 class="section-title">💳 Withdraw Rewards</h2>
+
+    <div class="withdraw-card">
+
+        <div class="withdraw-rule">
+
+            <p>👥 Minimum 10 Referrals</p>
+            <p>📋 Complete Minimum 2 Tasks</p>
+            <p>💰 Minimum Withdraw ₹100</p>
+
+        </div>
+
+        <input
+            type="text"
+            id="upiId"
+            placeholder="Enter your UPI ID"
+        >
+
+        <button id="withdrawBtn" class="withdraw-btn">
+            💸 Request Withdrawal
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- Leaderboard -->
+<div class="section">
+
+    <h2 class="section-title">🏆 Top Referrers</h2>
+
+    <div class="leaderboard-card">
+
+        <div id="leaderboard">
+            Loading leaderboard...
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- Footer -->
+<div class="footer">
+
+    <p>Daily Task Earning</p>
+
+    <span>Complete • Earn • Refer</span>
+
+</div>
+```
+
+</div>
+
+<!-- Firebase -->
+
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+
 <script src="app.js"></script>
-    
+
+<!-- Open / Close Task Section -->
+
+<script>
+
+document.getElementById("taskBtn").addEventListener("click", function() {
+
+    const section = document.getElementById("taskSection");
+
+    if (section.style.display === "none") {
+
+        section.style.display = "block";
+
+    } else {
+
+        section.style.display = "none";
+
+    }
+
+});
+
+</script>
+
 </body>
 </html>
