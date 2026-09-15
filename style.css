@@ -426,3 +426,333 @@ button:active {
     }
 
     }
+
+
+/* =================================
+   COMPLETE TASKS DESIGN
+================================= */
+
+.task-section {
+    margin-top: 15px;
+}
+
+
+/* TASK PAGE HEADER */
+
+.task-page-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    background: white;
+    padding: 18px;
+
+    border-radius: 18px;
+
+    margin-bottom: 15px;
+
+    box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+}
+
+.task-page-title > span {
+    width: 48px;
+    height: 48px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #eeeaff;
+
+    border-radius: 14px;
+
+    font-size: 23px;
+}
+
+.task-page-title h2 {
+    font-size: 19px;
+    margin: 0;
+}
+
+.task-page-title p {
+    font-size: 12px;
+    color: #7b8291;
+    margin-top: 4px;
+}
+
+
+/* APP TASK CARD */
+
+.earning-task-card {
+    background: white;
+
+    padding: 17px;
+
+    border-radius: 20px;
+
+    margin-bottom: 15px;
+
+    box-shadow: 0 5px 18px rgba(0,0,0,0.07);
+
+    border: 1px solid #eeeeF5;
+}
+
+
+/* APP HEADER */
+
+.app-header {
+    display: flex;
+    align-items: center;
+
+    gap: 11px;
+
+    margin-bottom: 14px;
+}
+
+.app-logo {
+    width: 48px;
+    height: 48px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #eeeaff;
+
+    border-radius: 14px;
+
+    font-size: 23px;
+}
+
+.dailydo-logo {
+    background: #e9f7ff;
+}
+
+.service-logo {
+    background: #e9fff1;
+}
+
+.app-header h3 {
+    font-size: 17px;
+    margin: 0;
+}
+
+.app-header p {
+    font-size: 12px;
+    color: #858b99;
+
+    margin-top: 3px;
+}
+
+
+/* REWARD */
+
+.task-reward {
+    margin-left: auto;
+
+    padding: 7px 9px;
+
+    background: #fff4d8;
+
+    color: #e99a00;
+
+    border-radius: 8px;
+
+    font-size: 9px;
+
+    font-weight: bold;
+}
+
+
+/* INFO BOX */
+
+.task-info-box {
+    background: #f7f7fb;
+
+    padding: 12px;
+
+    border-radius: 12px;
+
+    margin-bottom: 12px;
+}
+
+.task-info-box p {
+    font-size: 12px;
+
+    color: #656b78;
+
+    line-height: 1.6;
+
+    margin: 3px 0;
+}
+
+
+/* REFERRAL CODE */
+
+.referral-code {
+    display: inline-block;
+
+    background: #eeeaff;
+
+    color: #5b4bff;
+
+    padding: 7px 14px;
+
+    border-radius: 8px;
+
+    font-weight: bold;
+
+    font-size: 15px;
+
+    margin: 5px 0 8px;
+}
+
+
+/* BUTTONS */
+
+.task-buttons {
+    display: flex;
+
+    gap: 9px;
+
+    margin-bottom: 5px;
+}
+
+.task-buttons button {
+    flex: 1;
+
+    border: none;
+
+    padding: 12px 7px;
+
+    border-radius: 11px;
+
+    font-size: 12px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+
+/* APPLICATION BUTTON */
+
+.app-link-btn {
+    background: #5b4bff;
+
+    color: white;
+}
+
+
+/* VIDEO BUTTON */
+
+.video-btn {
+    background: #ffe9e9;
+
+    color: #e53935;
+}
+
+
+/* UID INPUT */
+
+.earning-task-card input {
+    width: 100%;
+
+    padding: 13px;
+
+    margin-top: 9px;
+
+    border: 1px solid #e0e2e8;
+
+    border-radius: 11px;
+
+    background: #fafbfc;
+
+    outline: none;
+
+    font-size: 13px;
+}
+
+.earning-task-card input:focus {
+    border-color: #5b4bff;
+
+    background: white;
+
+    box-shadow: 0 0 0 3px rgba(91,75,255,0.08);
+}
+
+
+/* SUBMIT BUTTON */
+
+.submit-task-btn {
+    width: 100%;
+
+    border: none;
+
+    padding: 13px;
+
+    margin-top: 9px;
+
+    border-radius: 11px;
+
+    background: #10b981;
+
+    color: white;
+
+    font-size: 13px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+
+/* IMPORTANT NOTE */
+
+.task-note {
+    background: #fff8e8;
+
+    border: 1px solid #ffe6a8;
+
+    padding: 14px;
+
+    border-radius: 15px;
+
+    margin-bottom: 20px;
+}
+
+.task-note strong {
+    font-size: 13px;
+
+    color: #b77900;
+}
+
+.task-note p {
+    font-size: 11px;
+
+    color: #777;
+
+    line-height: 1.6;
+
+    margin-top: 6px;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 380px) {
+
+    .task-buttons {
+        gap: 6px;
+    }
+
+    .task-buttons button {
+        font-size: 11px;
+        padding: 11px 5px;
+    }
+
+    .earning-task-card {
+        padding: 14px;
+    }
+
+}
