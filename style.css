@@ -1,22 +1,428 @@
-body{
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
     font-family: Arial, sans-serif;
-    text-align:center;
-    background:#f5f5f5;
-    padding:20px;
+    background: #f4f6fb;
+    color: #202124;
+    min-height: 100vh;
 }
 
-h1{
-    color:#0088cc;
+.app-container {
+    width: 100%;
+    max-width: 600px;
+    margin: auto;
+    padding: 18px 15px 40px;
 }
 
-button{
-    width:90%;
-    max-width:300px;
-    padding:15px;
-    margin:10px;
-    border:none;
-    border-radius:10px;
-    background:#0088cc;
-    color:white;
-    font-size:16px;
+
+/* HEADER */
+
+.header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 22px;
 }
+
+.logo {
+    width: 52px;
+    height: 52px;
+    border-radius: 16px;
+    background: #5b4bff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 25px;
+    box-shadow: 0 6px 20px rgba(91, 75, 255, 0.25);
+}
+
+.header h1 {
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.header p {
+    font-size: 13px;
+    color: #777;
+    margin-top: 4px;
+}
+
+
+/* BALANCE */
+
+.balance-card {
+    background: linear-gradient(135deg, #5b4bff, #8a4dff);
+    color: white;
+    padding: 25px;
+    border-radius: 22px;
+    margin-bottom: 18px;
+    box-shadow: 0 12px 30px rgba(91, 75, 255, 0.25);
+}
+
+.card-label {
+    font-size: 12px;
+    opacity: 0.8;
+    letter-spacing: 1px;
+}
+
+.balance-card h2 {
+    font-size: 42px;
+    margin: 8px 0 18px;
+}
+
+.balance-bottom {
+    border-top: 1px solid rgba(255,255,255,0.25);
+    padding-top: 14px;
+    font-size: 13px;
+}
+
+
+/* STATS */
+
+.stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 25px;
+}
+
+.stat-card {
+    background: white;
+    padding: 18px 10px;
+    border-radius: 18px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+.stat-icon {
+    font-size: 25px;
+}
+
+.stat-card p {
+    color: #888;
+    font-size: 10px;
+    margin: 8px 0 5px;
+}
+
+.stat-card h3 {
+    font-size: 22px;
+}
+
+
+/* SECTION */
+
+.section {
+    margin-top: 26px;
+}
+
+.section-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 13px;
+}
+
+.section-title h2 {
+    font-size: 18px;
+}
+
+.section-title span {
+    font-size: 11px;
+    color: #888;
+}
+
+
+/* TASK CARD */
+
+.task-card {
+    background: white;
+    border-radius: 17px;
+    padding: 15px;
+    margin-bottom: 11px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+.task-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+}
+
+.telegram {
+    background: #e9f6ff;
+}
+
+.youtube {
+    background: #fff0f0;
+}
+
+.whatsapp {
+    background: #ecfff4;
+}
+
+.task-info {
+    flex: 1;
+}
+
+.task-info h3 {
+    font-size: 15px;
+}
+
+.task-info p {
+    color: #888;
+    font-size: 11px;
+    margin-top: 5px;
+}
+
+.reward-btn,
+.open-btn {
+    border: none;
+    padding: 10px 13px;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.reward-btn {
+    background: #edeaff;
+    color: #5b4bff;
+}
+
+.open-btn {
+    background: #e8f8ef;
+    color: #169b57;
+}
+
+
+/* SPECIAL APP TASKS */
+
+.app-task-card {
+    background: white;
+    padding: 20px;
+    border-radius: 18px;
+    margin-bottom: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+.app-task-card h3 {
+    font-size: 17px;
+    margin-bottom: 8px;
+}
+
+.app-task-card p {
+    font-size: 13px;
+    color: #777;
+    line-height: 1.5;
+    margin-bottom: 15px;
+}
+
+.app-open-btn {
+    width: 100%;
+    border: none;
+    padding: 13px;
+    border-radius: 11px;
+    background: #f0efff;
+    color: #5b4bff;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+
+/* INPUT */
+
+input {
+    width: 100%;
+    border: 1px solid #e3e4ea;
+    padding: 14px;
+    border-radius: 11px;
+    outline: none;
+    font-size: 14px;
+    margin: 8px 0;
+    background: #fafbff;
+}
+
+input:focus {
+    border-color: #5b4bff;
+}
+
+
+/* SUBMIT */
+
+.submit-btn {
+    width: 100%;
+    padding: 13px;
+    border: none;
+    border-radius: 11px;
+    background: #5b4bff;
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+
+/* REFERRAL */
+
+.referral-card {
+    background: linear-gradient(135deg, #ff9f43, #ff6b6b);
+    color: white;
+    padding: 20px;
+    border-radius: 20px;
+    margin-top: 25px;
+    display: flex;
+    align-items: center;
+    gap: 13px;
+}
+
+.referral-icon {
+    font-size: 34px;
+}
+
+.referral-card div:nth-child(2) {
+    flex: 1;
+}
+
+.referral-card h2 {
+    font-size: 18px;
+}
+
+.referral-card p {
+    font-size: 11px;
+    margin-top: 5px;
+    opacity: 0.9;
+}
+
+.referral-card button {
+    border: none;
+    background: white;
+    color: #ff6b6b;
+    padding: 11px 15px;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+
+/* WITHDRAW */
+
+.withdraw-card {
+    background: white;
+    padding: 20px;
+    border-radius: 18px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+.withdraw-card label {
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.withdraw-rules {
+    background: #f7f7fb;
+    padding: 12px;
+    border-radius: 12px;
+    margin: 10px 0 15px;
+}
+
+.withdraw-rules p {
+    font-size: 12px;
+    color: #666;
+    margin: 7px 0;
+}
+
+.withdraw-btn {
+    width: 100%;
+    border: none;
+    padding: 15px;
+    border-radius: 12px;
+    background: #1fbd72;
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+
+/* LEADERBOARD */
+
+.leaderboard {
+    background: white;
+    padding: 18px;
+    border-radius: 18px;
+    min-height: 70px;
+    line-height: 2;
+    font-size: 14px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+
+/* FOOTER */
+
+.footer {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.footer p {
+    font-size: 13px;
+    color: #777;
+    margin-bottom: 10px;
+}
+
+.footer button {
+    border: none;
+    background: #25D366;
+    color: white;
+    padding: 13px 22px;
+    border-radius: 12px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.footer-text {
+    margin-top: 20px !important;
+    font-size: 11px !important;
+}
+
+
+/* BUTTON EFFECT */
+
+button {
+    transition: 0.2s;
+}
+
+button:active {
+    transform: scale(0.97);
+}
+
+
+/* MOBILE */
+
+@media (max-width: 400px) {
+
+    .balance-card h2 {
+        font-size: 36px;
+    }
+
+    .header h1 {
+        font-size: 21px;
+    }
+
+    .task-info h3 {
+        font-size: 13px;
+    }
+
+    }
