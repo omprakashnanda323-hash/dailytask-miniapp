@@ -1,438 +1,322 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1.0">
-
-    <title>Complete Tasks - Daily Task Earning</title>
+    <title>Complete Tasks - DailyTask Earning</title>
 
     <link rel="stylesheet" href="style.css">
 
-</head>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
 
+        .task-page {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+        }
+
+        .back-btn {
+            display: inline-block;
+            text-decoration: none;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .task-card {
+            background: white;
+            border-radius: 15px;
+            padding: 18px;
+            margin-bottom: 18px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .task-card h2 {
+            margin-top: 0;
+        }
+
+        .reward {
+            font-size: 20px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .task-info {
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .task-btn {
+            display: block;
+            width: 100%;
+            box-sizing: border-box;
+            padding: 12px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 10px;
+            text-align: center;
+            text-decoration: none;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .app-btn {
+            background: #6c5ce7;
+            color: white;
+        }
+
+        .video-btn {
+            background: #eeeeee;
+            color: #333;
+        }
+
+        .video-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        .submit-btn {
+            background: #111827;
+            color: white;
+        }
+
+        .uid-input {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 12px;
+            margin-top: 12px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            outline: none;
+        }
+
+        .notice {
+            background: #fff7ed;
+            border-radius: 12px;
+            padding: 14px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .small-text {
+            font-size: 12px;
+            color: #666;
+            margin-top: 8px;
+        }
+    </style>
+</head>
 
 <body>
 
-<div class="app-container">
+<div class="task-page">
+
+    <a href="index.html" class="back-btn">← Back to Dashboard</a>
+
+    <h1>📋 Complete Tasks</h1>
+
+    <div class="notice">
+        ⚠️ <b>Important:</b><br>
+        Task submit karne ke baad verification hoga.
+        Reward tabhi approve/milega jab aapka <b>1st withdrawal successfully complete</b> ho.
+    </div>
 
 
-    <!-- HEADER -->
+    <!-- WG REFER -->
+    <div class="task-card">
 
-    <div class="task-top-header">
+        <h2>📱 WG Refer</h2>
 
-        <a href="index.html" class="back-btn">
-            ←
+        <div class="reward">💰 Reward: ₹5</div>
+
+        <div class="task-info">
+            WG Refer app par register karein aur apna UID submit karein.
+        </div>
+
+        <a
+            href="https://wgrefer.com?c=59569635"
+            target="_blank"
+            class="task-btn app-btn">
+            🚀 Open WG Refer
         </a>
 
-        <div>
-
-            <h1>
-                Complete Tasks
-            </h1>
-
-            <p>
-                Register & earn rewards
-            </p>
-
-        </div>
-
-    </div>
-
-
-    <!-- INFO -->
-
-    <div class="task-page-title">
-
-        <span>
-            📋
-        </span>
-
-        <div>
-
-            <h2>
-                Available Tasks
-            </h2>
-
-            <p>
-                Complete registration and submit your UID
-            </p>
-
-        </div>
-
-    </div>
-
-
-    <!-- ========================= -->
-    <!-- WG REFER -->
-    <!-- ========================= -->
-
-    <div class="earning-task-card">
-
-        <div class="app-header">
-
-            <div class="app-logo">
-                📱
-            </div>
-
-            <div>
-
-                <h3>
-                    WG Refer
-                </h3>
-
-                <p>
-                    Registration Task
-                </p>
-
-            </div>
-
-            <div class="task-reward">
-                ₹? 
-            </div>
-
-        </div>
-
-
-        <div class="task-info-box">
-
-            <p>
-                📝 Register using our referral link.
-            </p>
-
-            <p>
-                💰 Complete the task and submit your UID.
-            </p>
-
-            <p>
-                ⚠️ Reward will be approved only after your
-                first withdrawal is successfully completed.
-            </p>
-
-        </div>
-
-
-        <div class="task-buttons">
-
-            <button
-                class="app-link-btn"
-                onclick="window.open('https://wgrefer.com?c=59569635','_blank')">
-
-                📱 Open Application
-
-            </button>
-
-        </div>
-
+        <button
+            class="task-btn video-btn"
+            type="button"
+            disabled>
+            ▶️ Tutorial Coming Soon
+        </button>
 
         <input
             type="text"
             id="app1Uid"
-            placeholder="Enter your WG Refer UID">
-
+            class="uid-input"
+            placeholder="Enter WG Refer UID">
 
         <button
-            class="submit-task-btn"
-            onclick="submitTask('WG Refer','app1Uid',0)">
-
+            id="submitApp1"
+            class="task-btn submit-btn"
+            type="button">
             ✅ Submit Task
-
         </button>
+
+        <div class="small-text">
+            Reward verification ke baad approve hoga.
+        </div>
 
     </div>
 
 
-    <!-- ========================= -->
     <!-- FLIXFOX -->
-    <!-- ========================= -->
+    <div class="task-card">
 
-    <div class="earning-task-card">
+        <h2>🎬 Flixfox</h2>
 
-        <div class="app-header">
+        <div class="reward">💰 Reward: ₹2</div>
 
-            <div class="app-logo">
-                🎬
-            </div>
-
-            <div>
-
-                <h3>
-                    Flixfox
-                </h3>
-
-                <p>
-                    Registration Task
-                </p>
-
-            </div>
-
-            <div class="task-reward">
-                ₹2
-            </div>
-
+        <div class="task-info">
+            Flixfox app par register karein aur apna UID submit karein.
         </div>
 
+        <a
+            href="https://filmm.me/uuOjdFyc"
+            target="_blank"
+            class="task-btn app-btn">
+            🚀 Open Flixfox
+        </a>
 
-        <div class="task-info-box">
-
-            <p>
-                📝 Register using our provided link.
-            </p>
-
-            <p>
-                💰 Reward: ₹2
-            </p>
-
-            <p>
-                ⚠️ Reward will be approved only after your
-                first withdrawal is successfully completed.
-            </p>
-
-        </div>
-
-
-        <div class="task-buttons">
-
-            <button
-                class="app-link-btn"
-                onclick="window.open('https://filmm.me/uuOjdFyc','_blank')">
-
-                📱 Open Application
-
-            </button>
-
-        </div>
-
+        <button
+            class="task-btn video-btn"
+            type="button"
+            disabled>
+            ▶️ Tutorial Coming Soon
+        </button>
 
         <input
             type="text"
             id="app2Uid"
-            placeholder="Enter your Flixfox UID">
-
+            class="uid-input"
+            placeholder="Enter Flixfox UID">
 
         <button
-            class="submit-task-btn"
-            onclick="submitTask('Flixfox','app2Uid',2)">
-
+            id="submitApp2"
+            class="task-btn submit-btn"
+            type="button">
             ✅ Submit Task
-
         </button>
+
+        <div class="small-text">
+            Reward verification ke baad approve hoga.
+        </div>
 
     </div>
 
 
-    <!-- ========================= -->
     <!-- KICKCASH -->
-    <!-- ========================= -->
+    <div class="task-card">
 
-    <div class="earning-task-card">
+        <h2>💸 KickCash</h2>
 
-        <div class="app-header">
+        <div class="reward">💰 Reward: ₹5</div>
 
-            <div class="app-logo">
-                💸
-            </div>
+        <div class="task-info">
+            KickCash par register karein.
 
-            <div>
+            <br><br>
 
-                <h3>
-                    KickCash
-                </h3>
-
-                <p>
-                    Registration Task
-                </p>
-
-            </div>
-
-            <div class="task-reward">
-                ₹5
-            </div>
-
+            <b>Referral Code:</b> OVXY4VY6
         </div>
 
+        <a
+            href="https://track.tenjin.com/v0/click/ct8RasfjkXXzeizK4Qna0i?campaign_name=referral&creative_name=OVXY4VY6"
+            target="_blank"
+            class="task-btn app-btn">
+            🚀 Open KickCash
+        </a>
 
-        <div class="task-info-box">
-
-            <p>
-                📝 Register using our referral link.
-            </p>
-
-            <p>
-                🔑 Referral Code:
-            </p>
-
-
-            <div class="referral-code">
-                OVXY4VY6
-            </div>
-
-
-            <p>
-                💰 Reward: ₹5
-            </p>
-
-            <p>
-                ⚠️ Reward will be approved only after your
-                first withdrawal is successfully completed.
-            </p>
-
-        </div>
-
-
-        <div class="task-buttons">
-
-            <button
-                class="app-link-btn"
-                onclick="window.open('https://track.tenjin.com/v0/click/ct8RasfjkXXzeizK4Qna0i?campaign_name=referral&creative_name=OVXY4VY6','_blank')">
-
-                📱 Open Application
-
-            </button>
-
-        </div>
-
+        <button
+            class="task-btn video-btn"
+            type="button"
+            disabled>
+            ▶️ Tutorial Coming Soon
+        </button>
 
         <input
             type="text"
             id="app3Uid"
-            placeholder="Enter your KickCash User ID">
-
+            class="uid-input"
+            placeholder="Enter KickCash User ID">
 
         <button
-            class="submit-task-btn"
-            onclick="submitTask('KickCash','app3Uid',5)">
-
+            id="submitApp3"
+            class="task-btn submit-btn"
+            type="button">
             ✅ Submit Task
-
         </button>
+
+        <div class="small-text">
+            Reward verification ke baad approve hoga.
+        </div>
 
     </div>
 
 
-    <!-- ========================= -->
     <!-- NAVI -->
-    <!-- ========================= -->
+    <div class="task-card">
 
-    <div class="earning-task-card">
+        <h2>🏦 Navi</h2>
 
-        <div class="app-header">
+        <div class="reward">💰 Reward: ₹10</div>
 
-            <div class="app-logo">
-                🏦
-            </div>
-
-            <div>
-
-                <h3>
-                    Navi
-                </h3>
-
-                <p>
-                    Registration Task
-                </p>
-
-            </div>
-
-            <div class="task-reward">
-                ₹10
-            </div>
-
+        <div class="task-info">
+            Navi app par register karein aur apna User ID submit karein.
         </div>
 
+        <a
+            href="https://r.navi.com/mzlL6D"
+            target="_blank"
+            class="task-btn app-btn">
+            🚀 Open Navi
+        </a>
 
-        <div class="task-info-box">
-
-            <p>
-                📝 Register using our provided referral link.
-            </p>
-
-            <p>
-                💰 Reward: ₹10
-            </p>
-
-            <p>
-                ⚠️ Reward will be approved only after your
-                first withdrawal is successfully completed.
-            </p>
-
-        </div>
-
-
-        <div class="task-buttons">
-
-            <button
-                class="app-link-btn"
-                onclick="window.open('https://r.navi.com/mzlL6D','_blank')">
-
-                📱 Open Application
-
-            </button>
-
-        </div>
-
+        <button
+            class="task-btn video-btn"
+            type="button"
+            disabled>
+            ▶️ Tutorial Coming Soon
+        </button>
 
         <input
             type="text"
             id="app4Uid"
-            placeholder="Enter your Navi User ID">
-
+            class="uid-input"
+            placeholder="Enter Navi User ID">
 
         <button
-            class="submit-task-btn"
-            onclick="submitTask('Navi','app4Uid',10)">
-
+            id="submitApp4"
+            class="task-btn submit-btn"
+            type="button">
             ✅ Submit Task
-
         </button>
 
-    </div>
-
-
-    <!-- IMPORTANT -->
-
-    <div class="task-note">
-
-        <strong>
-            ⚠️ Important Reward Condition
-        </strong>
-
-        <p>
-            Complete registration using the provided application
-            link and submit your correct UID/User ID.
-        </p>
-
-        <p>
-            <strong>
-                Rewards are not added immediately after task submission.
-            </strong>
-            The reward will be approved only after your
-            <strong>1st withdrawal is successfully completed</strong>.
-        </p>
-
-        <p>
-            Fake, incorrect or duplicate UIDs may result in
-            task rejection.
-        </p>
+        <div class="small-text">
+            Reward verification ke baad approve hoga.
+        </div>
 
     </div>
-
 
 </div>
 
 
-<!-- FIREBASE -->
-
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 
 <script src="app.js"></script>
 
-
 </body>
-
 </html>
