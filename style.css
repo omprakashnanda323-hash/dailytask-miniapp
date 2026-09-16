@@ -756,3 +756,327 @@ button:active {
     }
 
 }
+
+
+
+/* TASK PAGE HEADER */
+
+.task-top-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+
+    margin-bottom: 20px;
+}
+
+.task-top-header h1 {
+    font-size: 23px;
+    margin: 0;
+}
+
+.task-top-header p {
+    font-size: 12px;
+    color: #777f90;
+    margin-top: 4px;
+}
+
+
+/* BACK BUTTON */
+
+.back-btn {
+    width: 45px;
+    height: 45px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: white;
+    color: #5b4bff;
+
+    border-radius: 13px;
+
+    text-decoration: none;
+
+    font-size: 25px;
+    font-weight: bold;
+
+    box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+}
+
+
+/* REMOVE LINK UNDERLINE */
+
+.menu-card {
+    text-decoration: none;
+    color: inherit;
+}
+
+
+/* TASK PAGE */
+
+.task-page-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    background: white;
+    padding: 18px;
+
+    border-radius: 18px;
+
+    margin-bottom: 15px;
+
+    box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+}
+
+.task-page-title > span {
+    width: 48px;
+    height: 48px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #eeeaff;
+
+    border-radius: 14px;
+
+    font-size: 23px;
+}
+
+.task-page-title h2 {
+    font-size: 18px;
+}
+
+.task-page-title p {
+    font-size: 12px;
+    color: #7b8291;
+    margin-top: 4px;
+}
+
+
+/* TASK CARD */
+
+.earning-task-card {
+    background: white;
+
+    padding: 17px;
+
+    border-radius: 20px;
+
+    margin-bottom: 15px;
+
+    box-shadow: 0 5px 18px rgba(0,0,0,0.07);
+}
+
+
+/* APP HEADER */
+
+.app-header {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+
+    margin-bottom: 14px;
+}
+
+.app-logo {
+    width: 48px;
+    height: 48px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #eeeaff;
+
+    border-radius: 14px;
+
+    font-size: 23px;
+}
+
+.dailydo-logo {
+    background: #e9f7ff;
+}
+
+.service-logo {
+    background: #e9fff1;
+}
+
+.app-header h3 {
+    font-size: 17px;
+}
+
+.app-header p {
+    font-size: 12px;
+    color: #858b99;
+    margin-top: 3px;
+}
+
+
+/* REWARD */
+
+.task-reward {
+    margin-left: auto;
+
+    padding: 7px 9px;
+
+    background: #fff4d8;
+
+    color: #e99a00;
+
+    border-radius: 8px;
+
+    font-size: 9px;
+
+    font-weight: bold;
+}
+
+
+/* INFO */
+
+.task-info-box {
+    background: #f7f7fb;
+
+    padding: 12px;
+
+    border-radius: 12px;
+
+    margin-bottom: 12px;
+}
+
+.task-info-box p {
+    font-size: 12px;
+
+    color: #656b78;
+
+    line-height: 1.6;
+
+    margin: 3px 0;
+}
+
+
+/* BUTTONS */
+
+.task-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+.task-buttons button {
+    flex: 1;
+
+    border: none;
+
+    padding: 12px 5px;
+
+    border-radius: 11px;
+
+    font-size: 11px;
+
+    font-weight: bold;
+}
+
+.app-link-btn {
+    background: #5b4bff;
+    color: white;
+}
+
+.video-btn {
+    background: #ffe9e9;
+    color: #e53935;
+}
+
+
+/* UID */
+
+.earning-task-card input {
+    width: 100%;
+
+    padding: 13px;
+
+    margin-top: 10px;
+
+    border: 1px solid #e0e2e8;
+
+    border-radius: 11px;
+
+    outline: none;
+
+    font-size: 13px;
+
+    background: #fafbfc;
+}
+
+
+/* SUBMIT */
+
+.submit-task-btn {
+    width: 100%;
+
+    border: none;
+
+    padding: 13px;
+
+    margin-top: 9px;
+
+    border-radius: 11px;
+
+    background: #10b981;
+
+    color: white;
+
+    font-size: 13px;
+
+    font-weight: bold;
+}
+
+
+/* REFERRAL CODE */
+
+.referral-code {
+    display: inline-block;
+
+    background: #eeeaff;
+
+    color: #5b4bff;
+
+    padding: 7px 14px;
+
+    border-radius: 8px;
+
+    font-weight: bold;
+
+    margin: 5px 0 8px;
+}
+
+
+/* NOTE */
+
+.task-note {
+    background: #fff8e8;
+
+    border: 1px solid #ffe6a8;
+
+    padding: 14px;
+
+    border-radius: 15px;
+
+    margin-bottom: 20px;
+}
+
+.task-note strong {
+    font-size: 13px;
+    color: #b77900;
+}
+
+.task-note p {
+    font-size: 11px;
+
+    color: #777;
+
+    line-height: 1.6;
+
+    margin-top: 6px;
+    }
