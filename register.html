@@ -197,6 +197,22 @@ if (urlRef) {
 
           });
 
+// Save referral information
+const pendingReferral = localStorage.getItem("pendingReferral");
+
+if (pendingReferral && pendingReferral !== user.uid) {
+
+  await db.ref("referrals/" + user.uid).set({
+    referrerId: pendingReferral,
+    referredUserId: user.uid,
+    status: "pending",
+    createdAt: Date.now()
+  });
+
+  localStorage.removeItem("pendingReferral");
+}
+
+             
           message.style.color = "green";
           message.innerText = "Account created successfully!";
 
