@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>Complete Tasks - Daily Task Earning</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body>
+
+<div class="app-container">
+
+
+    <!-- HEADER -->
+
+    <div class="task-top-header">
+
+        <a href="index.html" class="back-btn">
+            ←
+        </a>
+
+        <div>
+
+            <h1>
+                Complete Tasks
+            </h1>
+
+            <p>
+                Register & earn rewards
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- INFO -->
+
+    <div class="task-page-title">
+
+        <span>
+            📋
+        </span>
+
+        <div>
+
+            <h2>
+                Available Tasks
+            </h2>
+
+            <p>
+                Complete registration and submit your UID
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- WG REFER -->
+
+    <div class="earning-task-card">
+
+        <div class="app-header">
+
+            <div class="app-logo">
+                📱
+            </div>
+
+            <div>
+
+                <h3>
+                    WG Refer
+                </h3>
+
+                <p>
+                    Registration Task
+                </p>
+
+            </div>
+
+            <div class="task-reward">
+                TASK
+            </div>
+
+        </div>
+
+
+        <div class="task-info-box">
+
+            <p>
+                📝 Register using our referral link.
+            </p>
+
+            <p>
+                💡 Watch the tutorial to learn the complete process.
+            </p>
+
+        </div>
+
+
+        <div class="task-buttons">
+
+            <button
+                class="app-link-btn"
+                onclick="window.open('https://wgrefer.com?c=59569635','_blank')">
+
+                📱 Open Application
+
+            </button>
+
+
+            <button
+                class="video-btn"
+                onclick="window.open('YOUR_WG_REFER_YOUTUBE_VIDEO_LINK','_blank')">
+
+                ▶️ Watch Tutorial
+
+            </button>
+
+        </div>
+
+
+        <input
+            type="text"
+            id="app1Uid"
+            placeholder="Enter your WG Refer UID">
+
+
+        <button
+            class="submit-task-btn"
+            onclick="submitTask('WG Refer','app1Uid')">
+
+            ✅ Submit Task
+
+        </button>
+
+    </div>
+
+
+    <!-- DAILYDO -->
+
+    <div class="earning-task-card">
+
+        <div class="app-header">
+
+            <div class="app-logo dailydo-logo">
+                📲
+            </div>
+
+            <div>
+
+                <h3>
+                    DailyDo
+                </h3>
+
+                <p>
+                    Registration Task
+                </p>
+
+            </div>
+
+            <div class="task-reward">
+                TASK
+            </div>
+
+        </div>
+
+
+        <div class="task-info-box">
+
+            <p>
+                📝 Register using our referral link.
+            </p>
+
+            <p>
+                💡 Watch the tutorial to learn the process.
+            </p>
+
+        </div>
+
+
+        <div class="task-buttons">
+
+            <button
+                class="app-link-btn"
+                onclick="window.open('https://dailydo.in/refer?code=DDA3FLCRC','_blank')">
+
+                📱 Open Application
+
+            </button>
+
+
+            <button
+                class="video-btn"
+                onclick="window.open('YOUR_DAILYDO_YOUTUBE_VIDEO_LINK','_blank')">
+
+                ▶️ Watch Tutorial
+
+            </button>
+
+        </div>
+
+
+        <input
+            type="text"
+            id="app2Uid"
+            placeholder="Enter your DailyDo UID">
+
+
+        <button
+            class="submit-task-btn"
+            onclick="submitTask('DailyDo','app2Uid')">
+
+            ✅ Submit Task
+
+        </button>
+
+    </div>
+
+
+    <!-- SERVICE HUT -->
+
+    <div class="earning-task-card">
+
+        <div class="app-header">
+
+            <div class="app-logo service-logo">
+                🏦
+            </div>
+
+            <div>
+
+                <h3>
+                    Service Hut
+                </h3>
+
+                <p>
+                    Registration Task
+                </p>
+
+            </div>
+
+            <div class="task-reward">
+                TASK
+            </div>
+
+        </div>
+
+
+        <div class="task-info-box">
+
+            <p>
+                📝 Register using referral code:
+            </p>
+
+
+            <div class="referral-code">
+                580702
+            </div>
+
+
+            <p>
+                💡 Watch the tutorial to learn the process.
+            </p>
+
+        </div>
+
+
+        <div class="task-buttons">
+
+            <button
+                class="app-link-btn"
+                onclick="window.open('https://servicehut.online/','_blank')">
+
+                📱 Open Application
+
+            </button>
+
+
+            <button
+                class="video-btn"
+                onclick="window.open('YOUR_SERVICE_HUT_YOUTUBE_VIDEO_LINK','_blank')">
+
+                ▶️ Watch Tutorial
+
+            </button>
+
+        </div>
+
+
+        <input
+            type="text"
+            id="app3Uid"
+            placeholder="Enter your Service Hut UID">
+
+
+        <button
+            class="submit-task-btn"
+            onclick="submitTask('Service Hut','app3Uid')">
+
+            ✅ Submit Task
+
+        </button>
+
+    </div>
+
+
+    <!-- IMPORTANT -->
+
+    <div class="task-note">
+
+        <strong>
+            ⚠️ Important
+        </strong>
+
+        <p>
+            Complete registration using the provided application
+            link. You can watch the tutorial to understand the
+            process. After registration, enter your correct UID
+            and submit the task.
+        </p>
+
+    </div>
+
+
+</div>
+
+
+<!-- FIREBASE -->
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+
+<script src="app.js"></script>
+
+
+</body>
+
+</html>
