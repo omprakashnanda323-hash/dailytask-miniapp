@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Login - DailyTask Earning</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f3f4ff;
+        }
+
+        .box {
+            max-width: 450px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,.08);
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+        }
+
+        input {
+            width: 100%;
+            padding: 14px;
+            margin-top: 12px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            font-size: 15px;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            margin-top: 15px;
+            border: none;
+            border-radius: 10px;
+            background: #6c5ce7;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .link {
+            text-align: center;
+            margin-top: 18px;
+        }
+
+        .link a {
+            color: #6c5ce7;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        #message {
+            text-align: center;
+            margin-top: 12px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="box">
+
+    <div class="card">
+
+        <h1>🔐 Login</h1>
+
+        <p class="subtitle">
+            Welcome back to DailyTask Earning
+        </p>
+
+        <input
+            type="email"
+            id="email"
+            placeholder="Enter email">
+
+        <input
+            type="password"
+            id="password"
+            placeholder="Enter password">
+
+        <button onclick="loginUser()">
+            Login
+        </button>
+
+        <div id="message"></div>
+
+        <div class="link">
+            Don't have an account?
+            <a href="register.html">Create Account</a>
+        </div>
+
+    </div>
+
+</div>
+
+
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+
+<script>
+
+const firebaseConfig = {
+    apiKey: "AIzaSyBUxAiC17GvnyVAdZEuQ0IEi3ctzckd_Y",
+    authDomain: "dailytask-earning.firebaseapp.com",
+    databaseURL: "https://dailytask-earning-default-rtdb.firebaseio.com",
+    projectId: "dailytask-earning",
+    storageBucket: "dailytask-earning.firebasestorage.app",
+    messagingSenderId: "1054491992628",
+    appId: "1:1054491992628:web:e5f4820e9a77ef38252061"
+};
+
+firebase.initializeApp(firebaseConfig);
+
+const auth = firebase.auth();
+
+
+function loginUser() {
+
+    const email =
+        document.getElementById("email").value.trim();
+
+    const password =
+        document.getElementById("password").value;
+
+
+    if (!email || !password) {
+
+        document.getElementById("message").innerText =
+            "Enter email and password.";
+
+        return;
+    }
+
+
+    auth.signInWithEmailAndPassword(
+        email,
+        password
+    )
+    .then(() => {
+
+        window.location.href = "index.html";
+
+    })
+    .catch((error) => {
+
+        document.getElementById("message").innerText =
+            error.message;
+
+    });
+
+}
+
+</script>
+
+</body>
+</html>
