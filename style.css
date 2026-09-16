@@ -1080,3 +1080,64 @@ button:active {
 
     margin-top: 6px;
     }
+
+
+/* Complete Tasks - Mobile Fix */
+
+.complete-task-card {
+    width: 100%;
+    box-sizing: border-box;
+    display: flex !important;
+    align-items: center;
+    justify-content: space-between;
+    margin: 15px 0 !important;
+    padding: 18px !important;
+    border-radius: 16px;
+    text-decoration: none;
+}
+
+.complete-task-card .menu-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.complete-task-card h3 {
+    margin: 0 0 5px 0;
+}
+
+.complete-task-card p {
+    margin: 0;
+}
+
+.complete-task-card .arrow {
+    font-size: 30px;
+    flex-shrink: 0;
+}
+
+
+/* Mobile */
+@media (max-width: 600px) {
+
+    .complete-task-card {
+        width: 100% !important;
+        min-height: 85px;
+        padding: 16px !important;
+    }
+
+    .complete-task-card h3 {
+        font-size: 19px;
+    }
+
+    .complete-task-card p {
+        font-size: 13px;
+    }
+
+    .complete-task-card .menu-icon {
+        font-size: 28px;
+    }
+
+    .complete-task-card .arrow {
+        font-size: 28px;
+    }
+}
