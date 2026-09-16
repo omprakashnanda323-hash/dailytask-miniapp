@@ -1,3 +1,21 @@
+// Referral link handler
+(function () {
+  const params = new URLSearchParams(window.location.search);
+  const ref = params.get("ref");
+
+  // If referral link is opened and user is not on register page
+  if (ref && !window.location.pathname.endsWith("register.html")) {
+
+    // Save referral ID temporarily
+    localStorage.setItem("pendingReferral", ref);
+
+    // Send user to register page
+    window.location.href =
+      "register.html?ref=" + encodeURIComponent(ref);
+  }
+})();
+
+
 const firebaseConfig = {
     apiKey: "AIzaSyBUxAiC17GvnyVAdZEuQ0IEi3ctzckd_Y",
     authDomain: "dailytask-earning.firebaseapp.com",
