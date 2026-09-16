@@ -1,5 +1,5 @@
 const firebaseConfig = {
-    apiKey: "AIzaSyBUxAiC17gKvnyVAdZEuQ0IEi3ctzckd_Y",
+    apiKey: "AIzaSyBUxAiC17GvnyVAdZEuQ0IEi3ctzckd_Y",
     authDomain: "dailytask-earning.firebaseapp.com",
     databaseURL: "https://dailytask-earning-default-rtdb.firebaseio.com",
     projectId: "dailytask-earning",
@@ -10,104 +10,98 @@ const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 
+const db = firebase.database();
+
+
+// ===============================
+// USER ID
+// ===============================
 
 let userId = localStorage.getItem("userId");
 
 if (!userId) {
-
     userId = Date.now().toString();
-
     localStorage.setItem("userId", userId);
-
 }
 
+
+// ===============================
+// USER DATA
+// ===============================
 
 let referralCount = 0;
 let balance = 0;
 let completedTasks = 0;
+let taskBalance = 0;
 
 
-// ============================
+// ===============================
 // REFERRAL SYSTEM
-// ============================
+// ===============================
 
 const params = new URLSearchParams(window.location.search);
-
 const referrerId = params.get("ref");
-
 
 if (
     referrerId &&
     referrerId !== userId &&
     !localStorage.getItem("ref_used")
 ) {
-
-    firebase.database()
-        .ref("users/" + referrerId + "/count")
-        .transaction((current) => {
-
-            return (current || 0) + 1;
-
-        });
-
+    db.ref("users/" + referrerId + "/count").transaction((current) => {
+        return (current || 0) + 1;
+    });
 
     localStorage.setItem("ref_used", "yes");
-
 }
 
 
-// ============================
+// ===============================
 // LOAD USER DATA
-// ============================
+// ===============================
 
-firebase.database()
-    .ref("users/" + userId)
-    .on("value", (snapshot) => {
+db.ref("users/" + userId).on("value", (snapshot) => {
 
-        const data = snapshot.val() || {};
+    const data = snapshot.val() || {};
 
-        referralCount = data.count || 0;
+    referralCount = data.count || 0;
+    taskBalance = data.taskBalance || 0;
+    completedTasks = data.completedTasks || 0;
 
-        let taskBalance = data.taskBalance || 0;
-
-        completedTasks = data.completedTasks || 0;
-
-        balance =
-            (referralCount * 5) +
-            taskBalance;
+    balance = (referralCount * 5) + taskBalance;
 
 
-        const refCountElement =
-            document.getElementById("refCount");
+    const refCountElement = document.getElementById("refCount");
 
-        if (refCountElement) {
-
-            refCountElement.innerText =
-                "Referrals: " + referralCount;
-
-        }
+    if (refCountElement) {
+        refCountElement.innerText =
+            "Referrals: " + referralCount;
+    }
 
 
-        const balanceElement =
-            document.getElementById("balance");
+    const balanceElement = document.getElementById("balance");
 
-        if (balanceElement) {
-
-            balanceElement.innerText =
-                "Balance: ₹" + balance;
-
-        }
-
-    });
+    if (balanceElement) {
+        balanceElement.innerText =
+            "Balance: ₹" + balance;
+    }
 
 
-// ============================
+    const completedTasksElement =
+        document.getElementById("completedTasks");
+
+    if (completedTasksElement) {
+        completedTasksElement.innerText =
+            "Completed Tasks: " + completedTasks;
+    }
+
+});
+
+
+// ===============================
 // TELEGRAM TASK
-// ============================
+// ===============================
 
-const joinBtn =
-    document.getElementById("joinBtn");
-
+const joinBtn = document.getElementById("joinBtn");
 
 if (joinBtn) {
 
@@ -118,30 +112,22 @@ if (joinBtn) {
             "_blank"
         );
 
-
         if (!localStorage.getItem("telegram_done")) {
 
-            firebase.database()
-                .ref(
-                    "users/" +
-                    userId +
-                    "/taskBalance"
-                )
-                .transaction((current) => {
+            db.ref(
+                "users/" + userId + "/taskBalance"
+            ).transaction((current) => {
 
-                    return (current || 0) + 1;
+                return (current || 0) + 1;
 
-                });
-
+            });
 
             localStorage.setItem(
                 "telegram_done",
                 "yes"
             );
 
-
             alert("₹1 Added");
-
         }
 
     });
@@ -149,13 +135,12 @@ if (joinBtn) {
 }
 
 
-// ============================
+// ===============================
 // YOUTUBE TASK
-// ============================
+// ===============================
 
 const youtubeBtn =
     document.getElementById("youtubeBtn");
-
 
 if (youtubeBtn) {
 
@@ -166,30 +151,22 @@ if (youtubeBtn) {
             "_blank"
         );
 
-
         if (!localStorage.getItem("youtube_done")) {
 
-            firebase.database()
-                .ref(
-                    "users/" +
-                    userId +
-                    "/taskBalance"
-                )
-                .transaction((current) => {
+            db.ref(
+                "users/" + userId + "/taskBalance"
+            ).transaction((current) => {
 
-                    return (current || 0) + 1;
+                return (current || 0) + 1;
 
-                });
-
+            });
 
             localStorage.setItem(
                 "youtube_done",
                 "yes"
             );
 
-
             alert("₹1 Added");
-
         }
 
     });
@@ -197,13 +174,12 @@ if (youtubeBtn) {
 }
 
 
-// ============================
-// WHATSAPP GROUP
-// ============================
+// ===============================
+// WHATSAPP SUPPORT
+// ===============================
 
 const whatsappBtn =
     document.getElementById("whatsappBtn");
-
 
 if (whatsappBtn) {
 
@@ -219,13 +195,12 @@ if (whatsappBtn) {
 }
 
 
-// ============================
+// ===============================
 // REFERRAL LINK
-// ============================
+// ===============================
 
 const refBtn =
     document.getElementById("refBtn");
-
 
 if (refBtn) {
 
@@ -235,26 +210,31 @@ if (refBtn) {
             "https://omprakashnanda323-hash.github.io/dailytask-miniapp/?ref=" +
             userId;
 
+        if (navigator.clipboard) {
 
-        navigator.clipboard.writeText(
-            referralLink
-        );
+            navigator.clipboard.writeText(
+                referralLink
+            );
 
+            alert("Referral Link Copied");
 
-        alert("Referral Link Copied");
+        } else {
+
+            alert(referralLink);
+
+        }
 
     });
 
 }
 
 
-// ============================
+// ===============================
 // WITHDRAW
-// ============================
+// ===============================
 
 const withdrawBtn =
     document.getElementById("withdrawBtn");
-
 
 if (withdrawBtn) {
 
@@ -263,22 +243,12 @@ if (withdrawBtn) {
         const upiElement =
             document.getElementById("upiId");
 
-
-        if (!upiElement) {
-
-            return;
-
-        }
-
-
         const upiId =
-            upiElement.value.trim();
-
+            upiElement ? upiElement.value.trim() : "";
 
         if (!upiId) {
 
             alert("Enter UPI ID");
-
             return;
 
         }
@@ -317,25 +287,23 @@ if (withdrawBtn) {
         }
 
 
-        firebase.database()
-            .ref("withdrawRequests")
-            .push({
+        db.ref("withdrawRequests").push({
 
-                userId: userId,
+            userId: userId,
 
-                upiId: upiId,
+            upiId: upiId,
 
-                balance: balance,
+            balance: balance,
 
-                referrals: referralCount,
+            referrals: referralCount,
 
-                completedTasks: completedTasks,
+            completedTasks: completedTasks,
 
-                status: "pending",
+            status: "pending",
 
-                time: Date.now()
+            time: Date.now()
 
-            });
+        });
 
 
         alert(
@@ -347,113 +315,206 @@ if (withdrawBtn) {
 }
 
 
-// ============================
+// ===============================
 // LEADERBOARD
-// ============================
+// ===============================
 
-const leaderboard =
-    document.getElementById("leaderboard");
+db.ref("users").on("value", (snapshot) => {
 
+    const users = snapshot.val() || {};
 
-if (leaderboard) {
+    let arr = [];
 
-    firebase.database()
-        .ref("users")
-        .on("value", (snapshot) => {
+    for (let id in users) {
 
-            const users =
-                snapshot.val() || {};
+        arr.push({
 
+            id: id,
 
-            let arr = [];
-
-
-            for (let id in users) {
-
-                arr.push({
-
-                    id: id,
-
-                    refs:
-                        users[id].count || 0
-
-                });
-
-            }
-
-
-            arr.sort(
-                (a, b) =>
-                    b.refs - a.refs
-            );
-
-
-            let html = "";
-
-
-            arr.slice(0, 10)
-                .forEach((user, index) => {
-
-                    html +=
-                        (index + 1) +
-                        ". " +
-                        user.id.substring(0, 6) +
-                        " - " +
-                        user.refs +
-                        " referrals<br>";
-
-                });
-
-
-            leaderboard.innerHTML =
-                html;
+            refs: users[id].count || 0
 
         });
 
-}
+    }
 
 
-// ============================
-// OLD TASK TOGGLE
-// ============================
+    arr.sort((a, b) => {
+
+        return b.refs - a.refs;
+
+    });
+
+
+    let html = "";
+
+
+    arr.slice(0, 10).forEach(
+        (user, index) => {
+
+            html +=
+                (index + 1) +
+                ". " +
+                user.id.substring(0, 6) +
+                " - " +
+                user.refs +
+                " referrals<br>";
+
+        }
+    );
+
+
+    const leaderboard =
+        document.getElementById("leaderboard");
+
+    if (leaderboard) {
+
+        leaderboard.innerHTML = html;
+
+    }
+
+});
+
+
+// ===============================
+// TASK SECTION TOGGLE
+// ===============================
 
 const taskBtn =
     document.getElementById("taskBtn");
 
-
 if (taskBtn) {
 
-    taskBtn.addEventListener(
+    taskBtn.addEventListener("click", () => {
+
+        const taskSection =
+            document.getElementById("taskSection");
+
+        if (!taskSection) return;
+
+
+        if (
+            taskSection.style.display === "none" ||
+            taskSection.style.display === ""
+        ) {
+
+            taskSection.style.display = "block";
+
+        } else {
+
+            taskSection.style.display = "none";
+
+        }
+
+    });
+
+}
+
+
+// ===============================
+// TASK SUBMISSION
+// ===============================
+
+function submitTask(appName, inputId, reward) {
+
+    const input =
+        document.getElementById(inputId);
+
+    if (!input) {
+
+        alert("Input field not found");
+        return;
+
+    }
+
+
+    const uid = input.value.trim();
+
+
+    if (!uid) {
+
+        alert(
+            "Enter UID / User ID"
+        );
+
+        return;
+
+    }
+
+
+    // Prevent same task submission
+    const taskKey =
+        "task_submitted_" +
+        appName.toLowerCase().replace(/\s+/g, "_");
+
+
+    if (localStorage.getItem(taskKey)) {
+
+        alert(
+            "You have already submitted this task."
+        );
+
+        return;
+
+    }
+
+
+    db.ref("taskRequests").push({
+
+        userId: userId,
+
+        app: appName,
+
+        uid: uid,
+
+        reward: reward,
+
+        status: "pending",
+
+        rewardStatus:
+            "waiting_for_first_successful_withdrawal",
+
+        time: Date.now()
+
+    });
+
+
+    localStorage.setItem(
+        taskKey,
+        "yes"
+    );
+
+
+    input.value = "";
+
+
+    alert(
+        "Task Submitted Successfully!\n\n" +
+        "Status: Pending Verification\n" +
+        "Reward: ₹" + reward + "\n\n" +
+        "Reward first successful withdrawal ke baad approve hoga."
+    );
+
+}
+
+
+// ===============================
+// WG REFER
+// ===============================
+
+const submitApp1 =
+    document.getElementById("submitApp1");
+
+if (submitApp1) {
+
+    submitApp1.addEventListener(
         "click",
         () => {
 
-            const taskSection =
-                document.getElementById(
-                    "taskSection"
-                );
-
-
-            if (!taskSection) {
-
-                return;
-
-            }
-
-
-            if (
-                taskSection.style.display ===
-                "none"
-            ) {
-
-                taskSection.style.display =
-                    "block";
-
-            } else {
-
-                taskSection.style.display =
-                    "none";
-
-            }
+            submitTask(
+                "WG Refer",
+                "app1Uid",
+                5
+            );
 
         }
     );
@@ -461,77 +522,76 @@ if (taskBtn) {
 }
 
 
-// ============================
-// SUBMIT TASK
-// ============================
+// ===============================
+// FLIXFOX
+// ===============================
 
-function submitTask(
-    appName,
-    inputId,
-    reward
-) {
+const submitApp2 =
+    document.getElementById("submitApp2");
 
-    const input =
-        document.getElementById(inputId);
+if (submitApp2) {
 
+    submitApp2.addEventListener(
+        "click",
+        () => {
 
-    if (!input) {
+            submitTask(
+                "Flixfox",
+                "app2Uid",
+                2
+            );
 
-        alert(
-            "Input field not found"
-        );
-
-        return;
-
-    }
-
-
-    const uid =
-        input.value.trim();
-
-
-    if (!uid) {
-
-        alert(
-            "Enter your UID / User ID"
-        );
-
-        return;
-
-    }
-
-
-    // Create task request
-
-    firebase.database()
-        .ref("taskRequests")
-        .push({
-
-            userId: userId,
-
-            app: appName,
-
-            uid: uid,
-
-            reward: reward,
-
-            status: "pending",
-
-            rewardStatus: "waiting_for_first_withdrawal",
-
-            time: Date.now()
-
-        });
-
-
-    alert(
-        "Task Submitted Successfully!\n\n" +
-        "Reward: ₹" + reward +
-        "\n\n" +
-        "Reward will be approved after your 1st successful withdrawal."
+        }
     );
 
+}
 
-    input.value = "";
+
+// ===============================
+// KICKCASH
+// ===============================
+
+const submitApp3 =
+    document.getElementById("submitApp3");
+
+if (submitApp3) {
+
+    submitApp3.addEventListener(
+        "click",
+        () => {
+
+            submitTask(
+                "KickCash",
+                "app3Uid",
+                5
+            );
+
+        }
+    );
+
+}
+
+
+// ===============================
+// NAVI
+// ===============================
+
+const submitApp4 =
+    document.getElementById("submitApp4");
+
+if (submitApp4) {
+
+    submitApp4.addEventListener(
+        "click",
+        () => {
+
+            submitTask(
+                "Navi",
+                "app4Uid",
+                10
+            );
+
+        }
+    );
 
 }
