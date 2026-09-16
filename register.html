@@ -136,6 +136,13 @@
     const auth = firebase.auth();
     const db = firebase.database();
 
+    // Get referral ID
+const urlParams = new URLSearchParams(window.location.search);
+const urlRef = urlParams.get("ref");
+
+if (urlRef) {
+  localStorage.setItem("pendingReferral", urlRef);
+}
 
     function registerUser() {
 
