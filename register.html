@@ -1,241 +1,229 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register - DailyTask Earning</title>
 
-    <title>Create Account - DailyTask Earning</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
 
-    <style>
-        * {
-            box-sizing: border-box;
-        }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
 
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: #f3f4ff;
-        }
+    .register-box {
+      width: 100%;
+      max-width: 400px;
+      background: white;
+      padding: 25px;
+      border-radius: 18px;
+      box-shadow: 0 5px 25px rgba(0,0,0,0.1);
+    }
 
-        .box {
-            max-width: 450px;
-            margin: 50px auto;
-            padding: 20px;
-        }
+    h2 {
+      text-align: center;
+      margin-bottom: 8px;
+    }
 
-        .card {
-            background: white;
-            padding: 25px;
-            border-radius: 20px;
-            box-shadow: 0 5px 20px rgba(0,0,0,.08);
-        }
+    .subtitle {
+      text-align: center;
+      color: #777;
+      margin-bottom: 25px;
+    }
 
-        h1 {
-            text-align: center;
-        }
+    input {
+      width: 100%;
+      padding: 14px;
+      margin-bottom: 15px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      font-size: 15px;
+    }
 
-        .subtitle {
-            text-align: center;
-            color: #666;
-        }
+    button {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 10px;
+      background: #2563eb;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
 
-        input {
-            width: 100%;
-            padding: 14px;
-            margin-top: 12px;
-            border: 1px solid #ddd;
-            border-radius: 10px;
-            font-size: 15px;
-        }
+    button:disabled {
+      background: #999;
+    }
 
-        button {
-            width: 100%;
-            padding: 14px;
-            margin-top: 15px;
-            border: none;
-            border-radius: 10px;
-            background: #6c5ce7;
-            color: white;
-            font-size: 16px;
-            font-weight: bold;
-        }
+    #message {
+      margin-top: 15px;
+      text-align: center;
+      font-size: 14px;
+    }
 
-        .link {
-            text-align: center;
-            margin-top: 18px;
-        }
+    .login-link {
+      text-align: center;
+      margin-top: 20px;
+    }
 
-        .link a {
-            color: #6c5ce7;
-            font-weight: bold;
-            text-decoration: none;
-        }
-
-        #message {
-            text-align: center;
-            margin-top: 12px;
-        }
-    </style>
+    .login-link a {
+      color: #2563eb;
+      text-decoration: none;
+      font-weight: bold;
+    }
+  </style>
 </head>
 
 <body>
 
-<div class="box">
+  <div class="register-box">
 
-    <div class="card">
+    <h2>📝 Create Account</h2>
+    <div class="subtitle">DailyTask Earning</div>
 
-        <h1>🚀 Create Account</h1>
+    <input type="text" id="name" placeholder="Full Name">
 
-        <p class="subtitle">
-            Join DailyTask Earning
-        </p>
+    <input type="tel" id="mobile" placeholder="Mobile Number">
 
-        <input
-            type="text"
-            id="name"
-            placeholder="Enter your name">
+    <input type="email" id="email" placeholder="Email Address">
 
-        <input
-            type="tel"
-            id="mobile"
-            placeholder="Enter mobile number">
+    <input type="password" id="password" placeholder="Password">
 
-        <input
-            type="email"
-            id="email"
-            placeholder="Enter email">
+    <button id="registerBtn" onclick="registerUser()">
+      Create Account
+    </button>
 
-        <input
-            type="password"
-            id="password"
-            placeholder="Create password">
+    <div id="message"></div>
 
-        <button onclick="registerUser()">
-            Create Account
-        </button>
-
-        <div id="message"></div>
-
-        <div class="link">
-            Already have an account?
-            <a href="login.html">Login</a>
-        </div>
-
+    <div class="login-link">
+      Already have an account?
+      <a href="login.html">Login</a>
     </div>
 
-</div>
+  </div>
 
 
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
 
-<script>
+  <script>
 
-const firebaseConfig = {
-    apiKey: "AIzaSyBUxAiC17GvnyVAdZEuQ0IEi3ctzckd_Y",
-    authDomain: "dailytask-earning.firebaseapp.com",
-    databaseURL: "https://dailytask-earning-default-rtdb.firebaseio.com",
-    projectId: "dailytask-earning",
-    storageBucket: "dailytask-earning.firebasestorage.app",
-    messagingSenderId: "1054491992628",
-    appId: "1:1054491992628:web:e5f4820e9a77ef38252061"
-};
+    const firebaseConfig = {
+      apiKey: "AIzaSyBUxAiC17gKvnyVAdZEuQ0IEi3ctzckd_Y",
+      authDomain: "dailytask-earning.firebaseapp.com",
+      databaseURL: "https://dailytask-earning-default-rtdb.firebaseio.com",
+      projectId: "dailytask-earning",
+      storageBucket: "dailytask-earning.firebasestorage.app",
+      messagingSenderId: "1054491992628",
+      appId: "1:1054491992628:web:e5f4820e9a77ef38252061"
+    };
 
-firebase.initializeApp(firebaseConfig);
+    firebase.initializeApp(firebaseConfig);
 
-const auth = firebase.auth();
-const db = firebase.database();
-
-
-function registerUser() {
-
-    const name =
-        document.getElementById("name").value.trim();
-
-    const mobile =
-        document.getElementById("mobile").value.trim();
-
-    const email =
-        document.getElementById("email").value.trim();
-
-    const password =
-        document.getElementById("password").value;
+    const auth = firebase.auth();
+    const db = firebase.database();
 
 
-    if (!name || !mobile || !email || !password) {
+    function registerUser() {
 
-        document.getElementById("message").innerText =
-            "Please fill all fields.";
+      const name = document.getElementById("name").value.trim();
+      const mobile = document.getElementById("mobile").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value;
 
+      const message = document.getElementById("message");
+      const button = document.getElementById("registerBtn");
+
+
+      if (!name || !mobile || !email || !password) {
+        message.style.color = "red";
+        message.innerText = "Please fill all fields.";
         return;
-    }
+      }
 
-
-    if (password.length < 6) {
-
-        document.getElementById("message").innerText =
-            "Password must be at least 6 characters.";
-
+      if (password.length < 6) {
+        message.style.color = "red";
+        message.innerText = "Password must be at least 6 characters.";
         return;
-    }
+      }
 
 
-    auth.createUserWithEmailAndPassword(
-        email,
-        password
-    )
-    .then((credential) => {
+      button.disabled = true;
+      button.innerText = "Creating Account...";
 
-        const user = credential.user;
+      auth.createUserWithEmailAndPassword(email, password)
 
+        .then(async (userCredential) => {
 
-        return user.updateProfile({
+          const user = userCredential.user;
 
+          await user.updateProfile({
             displayName: name
+          });
 
-        }).then(() => {
+          await db.ref("users/" + user.uid).set({
 
-            return db.ref(
-                "users/" + user.uid
-            ).set({
+            uid: user.uid,
+            name: name,
+            mobile: mobile,
+            email: email,
 
-                name: name,
+            count: 0,
+            taskBalance: 0,
+            completedTasks: 0,
+            withdrawnAmount: 0,
 
-                mobile: mobile,
+            createdAt: Date.now()
 
-                email: email,
+          });
 
-                count: 0,
+          message.style.color = "green";
+          message.innerText = "Account created successfully!";
 
-                taskBalance: 0,
+          setTimeout(() => {
+            window.location.href = "index.html";
+          }, 1000);
 
-                completedTasks: 0,
+        })
 
-                createdAt: Date.now()
+        .catch((error) => {
 
-            });
+          button.disabled = false;
+          button.innerText = "Create Account";
+
+          message.style.color = "red";
+
+          if (error.code === "auth/email-already-in-use") {
+            message.innerText = "This email is already registered.";
+          }
+          else if (error.code === "auth/invalid-email") {
+            message.innerText = "Invalid email address.";
+          }
+          else if (error.code === "auth/weak-password") {
+            message.innerText = "Password is too weak.";
+          }
+          else {
+            message.innerText = error.message;
+          }
 
         });
 
-    })
-    .then(() => {
+    }
 
-        alert("Account created successfully!");
-
-        window.location.href = "index.html";
-
-    })
-    .catch((error) => {
-
-        document.getElementById("message").innerText =
-            error.message;
-
-    });
-
-}
-
-</script>
+  </script>
 
 </body>
 </html>
