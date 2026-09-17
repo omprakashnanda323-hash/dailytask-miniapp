@@ -1,23 +1,15 @@
-// Referral link handler
-(function () {
-  const params = new URLSearchParams(window.location.search);
-  const ref = params.get("ref");
+// =====================================================
+// DAILY TASK EARNING - APP.JS
+// Firebase Auth UID + Referral + Tasks + Withdraw
+// =====================================================
 
-  // If referral link is opened and user is not on register page
-  if (ref && !window.location.pathname.endsWith("register.html")) {
 
-    // Save referral ID temporarily
-    localStorage.setItem("pendingReferral", ref);
-
-    // Send user to register page
-    window.location.href =
-      "register.html?ref=" + encodeURIComponent(ref);
-  }
-})();
-
+// =====================================================
+// FIREBASE CONFIG
+// =====================================================
 
 const firebaseConfig = {
-    apiKey: "AIzaSyBUxAiC17GvnyVAdZEuQ0IEi3ctzckd_Y",
+    apiKey: "AIzaSyBUxAiC17gKvnyVAdZEuQ0IEi3ctzckd_Y",
     authDomain: "dailytask-earning.firebaseapp.com",
     databaseURL: "https://dailytask-earning-default-rtdb.firebaseio.com",
     projectId: "dailytask-earning",
@@ -26,124 +18,258 @@ const firebaseConfig = {
     appId: "1:1054491992628:web:e5f4820e9a77ef38252061"
 };
 
-firebase.initializeApp(firebaseConfig);
+
+// =====================================================
+// FIREBASE INIT
+// =====================================================
+
+if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+}
 
 const db = firebase.database();
+const auth = firebase.auth();
 
 
-// ===============================
-// USER ID
-// ===============================
+// =====================================================
+// GLOBAL VARIABLES
+// =====================================================
 
-let userId = localStorage.getItem("userId");
-
-if (!userId) {
-    userId = Date.now().toString();
-    localStorage.setItem("userId", userId);
-}
-
-
-// ===============================
-// USER DATA
-// ===============================
+let userId = null;
 
 let referralCount = 0;
-let balance = 0;
-let completedTasks = 0;
 let taskBalance = 0;
+let completedTasks = 0;
+let balance = 0;
 
 
-// ===============================
-// REFERRAL SYSTEM
-// ===============================
+// =====================================================
+// REFERRAL LINK HANDLER
+// =====================================================
 
-const params = new URLSearchParams(window.location.search);
-const referrerId = params.get("ref");
+(function () {
 
-if (
-    referrerId &&
-    referrerId !== userId &&
-    !localStorage.getItem("ref_used")
-) {
-    db.ref("users/" + referrerId + "/count").transaction((current) => {
-        return (current || 0) + 1;
-    });
+    const params = new URLSearchParams(window.location.search);
+    const ref = params.get("ref");
 
-    localStorage.setItem("ref_used", "yes");
-}
+    if (
+        ref &&
+        !window.location.pathname.endsWith("register.html") &&
+        !window.location.pathname.endsWith("login.html")
+    ) {
 
+        localStorage.setItem("pendingReferral", ref);
 
-// ===============================
-// LOAD USER DATA
-// ===============================
+        window.location.href =
+            "register.html?ref=" + encodeURIComponent(ref);
+    }
 
-db.ref("users/" + userId).on("value", (snapshot) => {
-
-    const data = snapshot.val() || {};
-
-    referralCount = data.count || 0;
-    taskBalance = data.taskBalance || 0;
-    completedTasks = data.completedTasks || 0;
-
-    balance = (referralCount * 5) + taskBalance;
+})();
 
 
-    const refCountElement = document.getElementById("refCount");
+// =====================================================
+// WAIT FOR FIREBASE LOGIN
+// =====================================================
 
-    if (refCountElement) {
-        refCountElement.innerText =
-            "Referrals: " + referralCount;
+auth.onAuthStateChanged(function (user) {
+
+    // -------------------------------------------------
+    // USER NOT LOGGED IN
+    // -------------------------------------------------
+
+    if (!user) {
+
+        // Login/register page par kuch mat karo
+        if (
+            window.location.pathname.endsWith("login.html") ||
+            window.location.pathname.endsWith("register.html")
+        ) {
+            return;
+        }
+
+        // Baaki pages ko login par bhejo
+        window.location.href = "login.html";
+        return;
     }
 
 
-    const balanceElement = document.getElementById("balance");
+    // -------------------------------------------------
+    // FIREBASE AUTH UID
+    // -------------------------------------------------
 
-    if (balanceElement) {
-        balanceElement.innerText =
-            "Balance: ₹" + balance;
-    }
+    userId = user.uid;
 
 
-    const completedTasksElement =
-        document.getElementById("completedTasks");
+    // Old random userId ko use nahi karna
+    localStorage.setItem("userId", userId);
 
-    if (completedTasksElement) {
-        completedTasksElement.innerText =
-            "Completed Tasks: " + completedTasks;
-    }
+
+    // -------------------------------------------------
+    // LOAD USER
+    // -------------------------------------------------
+
+    loadUserData();
+
+
+    // -------------------------------------------------
+    // SETUP ALL FUNCTIONS
+    // -------------------------------------------------
+
+    setupTelegramTask();
+    setupYoutubeTask();
+    setupWhatsapp();
+    setupReferralButton();
+    setupWithdraw();
+    setupTaskToggle();
+    setupTaskButtons();
+    loadLeaderboard();
 
 });
 
 
-// ===============================
+// =====================================================
+// LOAD USER DATA
+// =====================================================
+
+function loadUserData() {
+
+    if (!userId) return;
+
+    db.ref("users/" + userId).on("value", function (snapshot) {
+
+        const data = snapshot.val() || {};
+
+
+        // Referral count
+        referralCount = Number(data.count || 0);
+
+
+        // Task balance
+        taskBalance = Number(data.taskBalance || 0);
+
+
+        // Completed tasks
+        completedTasks = Number(data.completedTasks || 0);
+
+
+        // Referral earning
+        const referralEarning = referralCount * 5;
+
+
+        // TOTAL BALANCE
+        balance = referralEarning + taskBalance;
+
+
+        // -------------------------------------------------
+        // REFERRAL COUNT
+        // -------------------------------------------------
+
+        const refCountElement =
+            document.getElementById("refCount");
+
+        if (refCountElement) {
+
+            refCountElement.innerText =
+                "Referrals: " + referralCount;
+        }
+
+
+        // -------------------------------------------------
+        // REFERRAL EARNING
+        // -------------------------------------------------
+
+        const referralBalanceElement =
+            document.getElementById("referralBalance");
+
+        if (referralBalanceElement) {
+
+            referralBalanceElement.innerText =
+                "Referral Earnings: ₹" + referralEarning;
+        }
+
+
+        // -------------------------------------------------
+        // TOTAL BALANCE
+        // -------------------------------------------------
+
+        const balanceElement =
+            document.getElementById("balance");
+
+        if (balanceElement) {
+
+            balanceElement.innerText =
+                "Balance: ₹" + balance;
+        }
+
+
+        // -------------------------------------------------
+        // TASK BALANCE
+        // -------------------------------------------------
+
+        const taskBalanceElement =
+            document.getElementById("taskBalance");
+
+        if (taskBalanceElement) {
+
+            taskBalanceElement.innerText =
+                "Task Earnings: ₹" + taskBalance;
+        }
+
+
+        // -------------------------------------------------
+        // COMPLETED TASKS
+        // -------------------------------------------------
+
+        const completedTasksElement =
+            document.getElementById("completedTasks");
+
+        if (completedTasksElement) {
+
+            completedTasksElement.innerText =
+                "Completed Tasks: " + completedTasks;
+        }
+
+    });
+
+}
+
+
+// =====================================================
 // TELEGRAM TASK
-// ===============================
+// =====================================================
 
-const joinBtn = document.getElementById("joinBtn");
+function setupTelegramTask() {
 
-if (joinBtn) {
+    const joinBtn =
+        document.getElementById("joinBtn");
 
-    joinBtn.addEventListener("click", () => {
+    if (!joinBtn) return;
+
+
+    joinBtn.addEventListener("click", function () {
 
         window.open(
             "https://t.me/+sVoxUBy6_8A3MDVl",
             "_blank"
         );
 
-        if (!localStorage.getItem("telegram_done")) {
+
+        if (!localStorage.getItem("telegram_done_" + userId)) {
 
             db.ref(
                 "users/" + userId + "/taskBalance"
-            ).transaction((current) => {
+            ).transaction(function (current) {
 
-                return (current || 0) + 1;
+                return (Number(current) || 0) + 1;
 
             });
 
+
             localStorage.setItem(
-                "telegram_done",
+                "telegram_done_" + userId,
                 "yes"
             );
+
 
             alert("₹1 Added");
         }
@@ -153,36 +279,42 @@ if (joinBtn) {
 }
 
 
-// ===============================
+// =====================================================
 // YOUTUBE TASK
-// ===============================
+// =====================================================
 
-const youtubeBtn =
-    document.getElementById("youtubeBtn");
+function setupYoutubeTask() {
 
-if (youtubeBtn) {
+    const youtubeBtn =
+        document.getElementById("youtubeBtn");
 
-    youtubeBtn.addEventListener("click", () => {
+    if (!youtubeBtn) return;
+
+
+    youtubeBtn.addEventListener("click", function () {
 
         window.open(
             "https://www.youtube.com/@omprakashnanda4140",
             "_blank"
         );
 
-        if (!localStorage.getItem("youtube_done")) {
+
+        if (!localStorage.getItem("youtube_done_" + userId)) {
 
             db.ref(
                 "users/" + userId + "/taskBalance"
-            ).transaction((current) => {
+            ).transaction(function (current) {
 
-                return (current || 0) + 1;
+                return (Number(current) || 0) + 1;
 
             });
 
+
             localStorage.setItem(
-                "youtube_done",
+                "youtube_done_" + userId,
                 "yes"
             );
+
 
             alert("₹1 Added");
         }
@@ -192,16 +324,19 @@ if (youtubeBtn) {
 }
 
 
-// ===============================
+// =====================================================
 // WHATSAPP SUPPORT
-// ===============================
+// =====================================================
 
-const whatsappBtn =
-    document.getElementById("whatsappBtn");
+function setupWhatsapp() {
 
-if (whatsappBtn) {
+    const whatsappBtn =
+        document.getElementById("whatsappBtn");
 
-    whatsappBtn.addEventListener("click", () => {
+    if (!whatsappBtn) return;
+
+
+    whatsappBtn.addEventListener("click", function () {
 
         window.open(
             "https://chat.whatsapp.com/EsGi004mef1381COmn0qpt?s=cl&p=a&mlu=4&ilr=4",
@@ -213,20 +348,31 @@ if (whatsappBtn) {
 }
 
 
-// ===============================
-// REFERRAL LINK
-// ===============================
+// =====================================================
+// REFERRAL BUTTON
+// =====================================================
 
-const refBtn =
-    document.getElementById("refBtn");
+function setupReferralButton() {
 
-if (refBtn) {
+    const refBtn =
+        document.getElementById("refBtn");
 
-    refBtn.addEventListener("click", () => {
+    if (!refBtn) return;
+
+
+    refBtn.addEventListener("click", function () {
+
+        if (!userId) {
+
+            alert("Please login first.");
+            return;
+        }
+
 
         const referralLink =
             "https://omprakashnanda323-hash.github.io/dailytask-miniapp/?ref=" +
             userId;
+
 
         if (navigator.clipboard) {
 
@@ -234,7 +380,10 @@ if (refBtn) {
                 referralLink
             );
 
-            alert("Referral Link Copied");
+            alert(
+                "Referral Link Copied!\n\n" +
+                referralLink
+            );
 
         } else {
 
@@ -247,31 +396,39 @@ if (refBtn) {
 }
 
 
-// ===============================
+// =====================================================
 // WITHDRAW
-// ===============================
+// =====================================================
 
-const withdrawBtn =
-    document.getElementById("withdrawBtn");
+function setupWithdraw() {
 
-if (withdrawBtn) {
+    const withdrawBtn =
+        document.getElementById("withdrawBtn");
 
-    withdrawBtn.addEventListener("click", () => {
+    if (!withdrawBtn) return;
+
+
+    withdrawBtn.addEventListener("click", function () {
 
         const upiElement =
             document.getElementById("upiId");
 
-        const upiId =
-            upiElement ? upiElement.value.trim() : "";
 
+        const upiId =
+            upiElement ?
+            upiElement.value.trim() :
+            "";
+
+
+        // UPI CHECK
         if (!upiId) {
 
             alert("Enter UPI ID");
             return;
-
         }
 
 
+        // REFERRAL CHECK
         if (referralCount < 10) {
 
             alert(
@@ -279,10 +436,10 @@ if (withdrawBtn) {
             );
 
             return;
-
         }
 
 
+        // TASK CHECK
         if (completedTasks < 2) {
 
             alert(
@@ -290,10 +447,10 @@ if (withdrawBtn) {
             );
 
             return;
-
         }
 
 
+        // BALANCE CHECK
         if (balance < 100) {
 
             alert(
@@ -301,9 +458,12 @@ if (withdrawBtn) {
             );
 
             return;
-
         }
 
+
+        // -------------------------------------------------
+        // WITHDRAW REQUEST
+        // -------------------------------------------------
 
         db.ref("withdrawRequests").push({
 
@@ -321,91 +481,118 @@ if (withdrawBtn) {
 
             time: Date.now()
 
+        })
+        .then(function () {
+
+            alert(
+                "Withdraw Request Submitted"
+            );
+
+        })
+        .catch(function (error) {
+
+            console.error(error);
+
+            alert(
+                "Withdraw request failed: " +
+                error.message
+            );
+
         });
-
-
-        alert(
-            "Withdraw Request Submitted"
-        );
 
     });
 
 }
 
 
-// ===============================
+// =====================================================
 // LEADERBOARD
-// ===============================
+// =====================================================
 
-db.ref("users").on("value", (snapshot) => {
+function loadLeaderboard() {
 
-    const users = snapshot.val() || {};
+    db.ref("users").on("value", function (snapshot) {
 
-    let arr = [];
+        const users =
+            snapshot.val() || {};
 
-    for (let id in users) {
 
-        arr.push({
+        let arr = [];
 
-            id: id,
 
-            refs: users[id].count || 0
+        for (let id in users) {
+
+            arr.push({
+
+                id: id,
+
+                refs:
+                    Number(users[id].count || 0)
+
+            });
+
+        }
+
+
+        // SORT
+        arr.sort(function (a, b) {
+
+            return b.refs - a.refs;
 
         });
 
-    }
+
+        let html = "";
 
 
-    arr.sort((a, b) => {
+        arr.slice(0, 10).forEach(
+            function (user, index) {
 
-        return b.refs - a.refs;
+                html +=
+                    (index + 1) +
+                    ". " +
+                    user.id.substring(0, 6) +
+                    " - " +
+                    user.refs +
+                    " referrals<br>";
+
+            }
+        );
+
+
+        const leaderboard =
+            document.getElementById("leaderboard");
+
+
+        if (leaderboard) {
+
+            leaderboard.innerHTML =
+                html;
+
+        }
 
     });
 
-
-    let html = "";
-
-
-    arr.slice(0, 10).forEach(
-        (user, index) => {
-
-            html +=
-                (index + 1) +
-                ". " +
-                user.id.substring(0, 6) +
-                " - " +
-                user.refs +
-                " referrals<br>";
-
-        }
-    );
+}
 
 
-    const leaderboard =
-        document.getElementById("leaderboard");
-
-    if (leaderboard) {
-
-        leaderboard.innerHTML = html;
-
-    }
-
-});
-
-
-// ===============================
+// =====================================================
 // TASK SECTION TOGGLE
-// ===============================
+// =====================================================
 
-const taskBtn =
-    document.getElementById("taskBtn");
+function setupTaskToggle() {
 
-if (taskBtn) {
+    const taskBtn =
+        document.getElementById("taskBtn");
 
-    taskBtn.addEventListener("click", () => {
+    if (!taskBtn) return;
+
+
+    taskBtn.addEventListener("click", function () {
 
         const taskSection =
             document.getElementById("taskSection");
+
 
         if (!taskSection) return;
 
@@ -415,11 +602,13 @@ if (taskBtn) {
             taskSection.style.display === ""
         ) {
 
-            taskSection.style.display = "block";
+            taskSection.style.display =
+                "block";
 
         } else {
 
-            taskSection.style.display = "none";
+            taskSection.style.display =
+                "none";
 
         }
 
@@ -428,24 +617,42 @@ if (taskBtn) {
 }
 
 
-// ===============================
+// =====================================================
 // TASK SUBMISSION
-// ===============================
+// =====================================================
 
-function submitTask(appName, inputId, reward) {
+function submitTask(
+    appName,
+    inputId,
+    reward
+) {
+
+    if (!userId) {
+
+        alert(
+            "Please login first."
+        );
+
+        return;
+    }
+
 
     const input =
         document.getElementById(inputId);
 
+
     if (!input) {
 
-        alert("Input field not found");
-        return;
+        alert(
+            "Input field not found"
+        );
 
+        return;
     }
 
 
-    const uid = input.value.trim();
+    const uid =
+        input.value.trim();
 
 
     if (!uid) {
@@ -455,14 +662,20 @@ function submitTask(appName, inputId, reward) {
         );
 
         return;
-
     }
 
 
-    // Prevent same task submission
+    // -------------------------------------------------
+    // PREVENT DUPLICATE SUBMISSION
+    // -------------------------------------------------
+
     const taskKey =
         "task_submitted_" +
-        appName.toLowerCase().replace(/\s+/g, "_");
+        appName
+            .toLowerCase()
+            .replace(/\s+/g, "_") +
+        "_" +
+        userId;
 
 
     if (localStorage.getItem(taskKey)) {
@@ -472,9 +685,12 @@ function submitTask(appName, inputId, reward) {
         );
 
         return;
-
     }
 
+
+    // -------------------------------------------------
+    // SAVE TASK
+    // -------------------------------------------------
 
     db.ref("taskRequests").push({
 
@@ -484,7 +700,7 @@ function submitTask(appName, inputId, reward) {
 
         uid: uid,
 
-        reward: reward,
+        reward: Number(reward),
 
         status: "pending",
 
@@ -493,123 +709,143 @@ function submitTask(appName, inputId, reward) {
 
         time: Date.now()
 
+    })
+    .then(function () {
+
+        localStorage.setItem(
+            taskKey,
+            "yes"
+        );
+
+
+        input.value = "";
+
+
+        alert(
+            "Task Submitted Successfully!\n\n" +
+            "Status: Pending Verification\n" +
+            "Reward: ₹" + reward + "\n\n" +
+            "Reward first successful withdrawal ke baad approve hoga."
+        );
+
+    })
+    .catch(function (error) {
+
+        console.error(error);
+
+        alert(
+            "Task submission failed: " +
+            error.message
+        );
+
     });
 
-
-    localStorage.setItem(
-        taskKey,
-        "yes"
-    );
-
-
-    input.value = "";
-
-
-    alert(
-        "Task Submitted Successfully!\n\n" +
-        "Status: Pending Verification\n" +
-        "Reward: ₹" + reward + "\n\n" +
-        "Reward first successful withdrawal ke baad approve hoga."
-    );
-
 }
 
 
-// ===============================
+// =====================================================
 // WG REFER
-// ===============================
+// =====================================================
 
-const submitApp1 =
-    document.getElementById("submitApp1");
+function setupTaskButtons() {
 
-if (submitApp1) {
-
-    submitApp1.addEventListener(
-        "click",
-        () => {
-
-            submitTask(
-                "WG Refer",
-                "app1Uid",
-                5
-            );
-
-        }
-    );
-
-}
+    const submitApp1 =
+        document.getElementById("submitApp1");
 
 
-// ===============================
-// FLIXFOX
-// ===============================
+    if (submitApp1) {
 
-const submitApp2 =
-    document.getElementById("submitApp2");
+        submitApp1.addEventListener(
+            "click",
+            function () {
 
-if (submitApp2) {
+                submitTask(
+                    "WG Refer",
+                    "app1Uid",
+                    5
+                );
 
-    submitApp2.addEventListener(
-        "click",
-        () => {
+            }
+        );
 
-            submitTask(
-                "Flixfox",
-                "app2Uid",
-                2
-            );
-
-        }
-    );
-
-}
+    }
 
 
-// ===============================
-// KICKCASH
-// ===============================
+    // =================================================
+    // FLIXFOX
+    // =================================================
 
-const submitApp3 =
-    document.getElementById("submitApp3");
-
-if (submitApp3) {
-
-    submitApp3.addEventListener(
-        "click",
-        () => {
-
-            submitTask(
-                "KickCash",
-                "app3Uid",
-                5
-            );
-
-        }
-    );
-
-}
+    const submitApp2 =
+        document.getElementById("submitApp2");
 
 
-// ===============================
-// NAVI
-// ===============================
+    if (submitApp2) {
 
-const submitApp4 =
-    document.getElementById("submitApp4");
+        submitApp2.addEventListener(
+            "click",
+            function () {
 
-if (submitApp4) {
+                submitTask(
+                    "Flixfox",
+                    "app2Uid",
+                    2
+                );
 
-    submitApp4.addEventListener(
-        "click",
-        () => {
+            }
+        );
 
-            submitTask(
-                "Navi",
-                "app4Uid",
-                10
-            );
+    }
 
-        }
-    );
+
+    // =================================================
+    // KICKCASH
+    // =================================================
+
+    const submitApp3 =
+        document.getElementById("submitApp3");
+
+
+    if (submitApp3) {
+
+        submitApp3.addEventListener(
+            "click",
+            function () {
+
+                submitTask(
+                    "KickCash",
+                    "app3Uid",
+                    5
+                );
+
+            }
+        );
+
+    }
+
+
+    // =================================================
+    // NAVI
+    // =================================================
+
+    const submitApp4 =
+        document.getElementById("submitApp4");
+
+
+    if (submitApp4) {
+
+        submitApp4.addEventListener(
+            "click",
+            function () {
+
+                submitTask(
+                    "Navi",
+                    "app4Uid",
+                    10
+                );
+
+            }
+        );
+
+    }
 
 }
