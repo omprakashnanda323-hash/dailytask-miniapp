@@ -73,47 +73,26 @@ let balance = 0;
 
 auth.onAuthStateChanged(function (user) {
 
-    // -------------------------------------------------
-    // USER NOT LOGGED IN
-    // -------------------------------------------------
+    // Login/Register page par redirect mat karo
+    if (
+        window.location.pathname.endsWith("login.html") ||
+        window.location.pathname.endsWith("register.html")
+    ) {
+        return;
+    }
 
+    // Main website ke liye login required
     if (!user) {
-
-        // Login/register page par kuch mat karo
-        if (
-            window.location.pathname.endsWith("login.html") ||
-            window.location.pathname.endsWith("register.html")
-        ) {
-            return;
-        }
-
-        // Baaki pages ko login par bhejo
         window.location.href = "login.html";
         return;
     }
 
-
-    // -------------------------------------------------
-    // FIREBASE AUTH UID
-    // -------------------------------------------------
-
+    // Firebase Auth UID
     userId = user.uid;
 
-
-    // Old random userId ko use nahi karna
     localStorage.setItem("userId", userId);
 
-
-    // -------------------------------------------------
-    // LOAD USER
-    // -------------------------------------------------
-
     loadUserData();
-
-
-    // -------------------------------------------------
-    // SETUP ALL FUNCTIONS
-    // -------------------------------------------------
 
     setupTelegramTask();
     setupYoutubeTask();
